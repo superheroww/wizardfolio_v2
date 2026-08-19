@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f1e7" />
+    <title>Look-Through — ETF overlap</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./refinement.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="home" class="screen active" aria-labelledby="home-title">
+        <header class="topbar"><a class="wordmark" href="#home">Look-Through</a><span class="avatar">JD</span></header>
+        <div class="hero"><p class="eyebrow">YOUR PORTFOLIO, UNPACKED</p><h1 id="home-title">Look through<br />your <em>ETFs</em></h1><p class="lede">See what you actually own.</p></div>
+        <div class="mix-card"><p class="label">Build your mix</p><div class="mix-values"><div><b id="homeTickerOne">VOO</b><strong id="homeVoo">60<sup>%</sup></strong></div><div><b id="homeTickerTwo">XEQT</b><strong id="homeXeqt">40<sup>%</sup></strong></div></div><div class="mix-meter"><i style="width:60%"></i><i style="width:40%"></i></div><button class="primary" data-screen="portfolio">See what’s underneath <span>→</span></button></div>
+        <div class="insight-grid"><article><small>You own Apple</small><strong id="homeAppleWeight">5.5%</strong><p id="homeAppleSources">through 2 ETFs</p></article><article><small>U.S. exposure</small><strong id="homeUsWeight">78%</strong><p>of everything you hold</p></article></div>
+        <section class="content-section"><p class="eyebrow">DISCOVER</p><h2>Popular combinations</h2><div class="combo-list" id="comboList"></div></section>
+        <section class="content-section"><p class="eyebrow">PLOT TWISTS</p><h2>Hidden overlaps</h2><p class="section-copy">Same company, different tickers.</p><div class="overlap-list" id="homeOverlapList"></div></section>
+      </section>
+
+      <section id="explore" class="screen" aria-labelledby="explore-title">
+        <header class="explore-header"><p class="eyebrow">Feed</p><h1 id="explore-title">Explore</h1><p>See what different ETF mixes actually look like.</p></header>
+        <div class="filters" aria-label="Explore filters">
+          <button type="button" class="selected" data-explore-filter="all">All</button>
+          <button type="button" data-explore-filter="trending">🔥<span>Trending</span></button>
+          <button type="button" data-explore-filter="global">🌎<span>Global</span></button>
+          <button type="button" data-explore-filter="canada">🍁<span>Canada</span></button>
+          <button type="button" data-explore-filter="growth">⚡<span>Growth</span></button>
+        </div>
+        <section class="explore-all">
+          <div class="explore-feed" id="exploreComboList"></div>
+        </section>
+        <p class="explore-disclaimer">Demo data. Combinations shown for exploration only.</p>
+      </section>
+
+      <section id="builder" class="screen" aria-labelledby="builder-title">
+        <header class="topbar"><button class="back" data-screen="home">← Go back</button><span class="page-tag">Builder</span><button class="text-button" id="evenSplit">Even split</button></header>
+        <div class="page-heading"><p class="eyebrow">MAKE IT YOURS</p><h1 id="builder-title">Build your mix</h1><p class="lede">Drag to change the weights. We’ll look inside each one.</p><div class="allocation"><b id="allocationTotal">100% allocated</b><span>2 ETFs</span></div></div>
+        <div class="fund-list"></div>
+        <button class="add" id="addEtf">＋ Add ETF</button>
+        <div class="add-etf-menu" id="addEtfMenu" hidden></div>
+        <section class="compare-panel" id="comparePanel" aria-labelledby="compare-title"></section>
+        <section class="portfolio-preview" data-portfolio-root data-portfolio-label="Live preview" aria-labelledby="builder-live-title">
+          <header class="portfolio-top"><span>Live preview</span><b>VOO 60% · XEQT 40%</b></header>
+          <div class="portfolio-intro"><p>Updates instantly</p><h1 id="builder-live-title" class="portfolio-title">You bought 2 ETFs.<br /><em>Here’s what’s inside.</em></h1></div>
+          <div class="securities-card" aria-live="polite"></div>
+          <div class="securities-card-summary"></div>
+          <section class="biggest-bets"><p class="eyebrow">Top holdings</p><h2>The companies you own most</h2><p>Your combined exposure across all ETFs.</p><article class="holding-card featured"><i>🍎</i><div><b>Apple</b><span class="ticker">AAPL</span></div><strong>10.4<sup>%</sup></strong></article><article class="holding-card"><i>🪟</i><div><b>Microsoft</b><span class="ticker">MSFT</span></div><strong>9.8<sup>%</sup></strong></article><article class="holding-card"><i>🎮</i><div><b>NVIDIA</b><span class="ticker">NVDA</span></div><strong>8.4<sup>%</sup></strong></article><article class="holding-card"><i>📦</i><div><b>Amazon</b><span class="ticker">AMZN</span></div><strong>3.4<sup>%</sup></strong></article><article class="holding-card"><i>🔍</i><div><b>Alphabet</b><span class="ticker">GOOGL</span></div><strong>3.3<sup>%</sup></strong></article><p class="holding-summary">Your top 5 holdings make up <b>35.3%</b> of your portfolio.</p></section>
+          <section class="overlap-summary"><p class="eyebrow">Overlap</p><h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-dashboard"><div class="overlap-stats"><span><strong>40%</strong><small>Overlap<br />by weight</small></span><span><strong>500</strong><small>Overlapping<br />holdings</small></span></div><div class="overlap-funds"><article><div><b>VOO</b><span>503 holdings</span></div><strong>99%</strong><small>also in XEQT</small></article><article><div><b>XEQT</b><span>8,382 holdings</span></div><strong>6%</strong><small>also in VOO</small></article></div></div></section>
+          <section class="industry-section"><p class="eyebrow">Sectors</p><h2>How your money is allocated</h2><p>Sector weight across the blended portfolio.</p><div class="sector-bars"><div class="sector-bar"><div class="sector-head"><b>Technology</b><strong>36.9%</strong></div><div class="sector-track"><i style="width:100%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Consumer</b><strong>16.0%</strong></div><div class="sector-track"><i style="width:43%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Financials</b><strong>12.9%</strong></div><div class="sector-track"><i style="width:35%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Healthcare</b><strong>9.6%</strong></div><div class="sector-track"><i style="width:26%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Communication</b><strong>9.5%</strong></div><div class="sector-track"><i style="width:26%"></i></div></div><div class="sector-note">Showing the top 5 sectors only. Smaller slices roll into Other. Top three = 65.8%.</div></div></section>
+          <section class="geo-section"><p class="eyebrow">Geography</p><h2>Where in the world?</h2><div class="geo-row"><span>🇺🇸 United States</span><b>72%</b></div><div class="geo-row"><span>🇨🇦 Canada</span><b>12%</b></div><div class="geo-row"><span>🌍 Rest of world</span><b>5%</b></div><div class="geo-note">Top three = 89.0%.</div></section>
+        </section>
+      </section>
+
+      <section id="portfolio" class="screen" data-portfolio-root data-portfolio-label="True exposure" aria-labelledby="portfolio-title">
+        <header class="portfolio-top"><button class="round-back" data-screen="builder">‹</button><span>True exposure</span><b>VOO 60% · XEQT 40%</b></header>
+        <div class="portfolio-intro"><p>Look-through complete</p><h1 id="portfolio-title" class="portfolio-title">You bought 2 ETFs.<br /><em>Here’s what’s inside.</em></h1></div>
+        <div class="securities-card" aria-live="polite"></div>
+        <div class="securities-card-summary"></div>
+        <section class="biggest-bets"><p class="eyebrow">Top holdings</p><h2>The companies you own most</h2><p>Your combined exposure across all ETFs.</p><article class="holding-card featured"><i>🍎</i><div><b>Apple</b><span class="ticker">AAPL</span></div><strong>10.4<sup>%</sup></strong></article><article class="holding-card"><i>🪟</i><div><b>Microsoft</b><span class="ticker">MSFT</span></div><strong>9.8<sup>%</sup></strong></article><article class="holding-card"><i>🎮</i><div><b>NVIDIA</b><span class="ticker">NVDA</span></div><strong>8.4<sup>%</sup></strong></article><article class="holding-card"><i>📦</i><div><b>Amazon</b><span class="ticker">AMZN</span></div><strong>3.4<sup>%</sup></strong></article><article class="holding-card"><i>🔍</i><div><b>Alphabet</b><span class="ticker">GOOGL</span></div><strong>3.3<sup>%</sup></strong></article><p class="holding-summary">Your top 5 holdings make up <b>35.3%</b> of your portfolio.</p></section>
+        <section class="overlap-summary"><p class="eyebrow">Overlap</p><h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-dashboard"><div class="overlap-stats"><span><strong>40%</strong><small>Overlap<br />by weight</small></span><span><strong>500</strong><small>Overlapping<br />holdings</small></span></div><div class="overlap-funds"><article><div><b>VOO</b><span>503 holdings</span></div><strong>99%</strong><small>also in XEQT</small></article><article><div><b>XEQT</b><span>8,382 holdings</span></div><strong>6%</strong><small>also in VOO</small></article></div></div></section>
+        <section class="industry-section"><p class="eyebrow">Sectors</p><h2>How your money is allocated</h2><p>Sector weight across the blended portfolio.</p><div class="sector-bars"><div class="sector-bar"><div class="sector-head"><b>Technology</b><strong>36.9%</strong></div><div class="sector-track"><i style="width:100%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Consumer</b><strong>16.0%</strong></div><div class="sector-track"><i style="width:43%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Financials</b><strong>12.9%</strong></div><div class="sector-track"><i style="width:35%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Healthcare</b><strong>9.6%</strong></div><div class="sector-track"><i style="width:26%"></i></div></div><div class="sector-bar"><div class="sector-head"><b>Communication</b><strong>9.5%</strong></div><div class="sector-track"><i style="width:26%"></i></div></div><div class="sector-note">Showing the top 5 sectors only. Smaller slices roll into Other. Top three = 65.8%.</div></div></section>
+        <section class="geo-section"><p class="eyebrow">Geography</p><h2>Where in the world?</h2><div class="geo-row"><span>🇺🇸 United States</span><b>72%</b></div><div class="geo-row"><span>🇨🇦 Canada</span><b>12%</b></div><div class="geo-row"><span>🌍 Rest of world</span><b>5%</b></div><div class="geo-note">Top three = 89.0%.</div></section>
+      </section>
+
+      <nav aria-label="Primary navigation"><button class="nav-active" data-screen="home"><span class="nav-icon">⌂</span><span>Home</span></button><button data-screen="explore"><span class="nav-icon">◉</span><span>Explore</span></button><button data-screen="builder"><span class="nav-icon nav-icon-blend" aria-hidden="true"><i></i><i></i><em></em></span><span>Blend</span></button><button id="compare" data-action="compare"><span class="nav-icon nav-icon-compare" aria-hidden="true"><i></i><i></i><em></em></span><span>Compare</span></button></nav>
+    </main>
+    <script src="./mock-data.js"></script>
+    <script src="./etf-catalog.js?v=20260817-5"></script>
+    <script src="./ishares-holdings.js?v=20260817-1"></script>
+    <script src="./app.js?v=20260817-12"></script>
+  </body>
+</html>
