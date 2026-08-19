@@ -1242,139 +1242,324 @@ function portfolioInsightSummaryMarkup(snapshot) {
   ${portfolioAmountEditorMarkup()}`;
 }
 
-function buildStandoutInsight(snapshot, portfolioValue) {
-  const { tickers, weights, holdings, sectors, geography } = snapshot;
-  const overlapSummary = strongestPortfolioOverlap(tickers, weights);
-  const topFive = holdings.slice(0, 5);
-  const topThreeCountries = geography.slice(0, 3);
-  const topThreeSectors = sectors.slice(0, 3);
-  const topFiveWeight = topFive.reduce((sum, holding) => sum + holding.weight, 0);
-  const topCountry = geography[0];
-  const secondCountry = geography[1];
-  const topSector = sectors[0];
-  const secondSector = sectors[1];
-  const duplicateCandidates = holdings
-    .filter(holding => (holding.sources?.length || 0) > 1)
-    .map(holding => {
-      const groupedSources = groupedSourcesByTicker(holding.sources);
-      return {
-        ...holding,
-        groupedSources,
-        etfCount: groupedSources.length
-      };
-    })
-    .sort((left, right) => {
-      if (right.etfCount !== left.etfCount) return right.etfCount - left.etfCount;
-      return right.weight - left.weight;
-    });
-  const topDuplicate = duplicateCandidates[0] || null;
-  const insights = [];
+const STANDOUT_RULES = {
+  hiddenConcentrationTopFive: 22,
+  hiddenConcentrationTopTen: 34,
+  megaCapTopThree: 15,
+  megaCapLargestHolding: 4.5,
+  duplicationWeight: 12,
+  duplicationOverlap: 5,
+  similarExposureOverlap: 8,
+  usConcentration: 78,
+  usDominanceGap: 28,
+  canadaTilt: 18,
+  sectorConcentration: 30,
+  sectorDominanceGap: 7,
+  diversificationInternational: 18,
+  diversificationContributorShare: 60,
+  strongDiversificationTopFive: 20,
+  strongDiversificationTopSector: 25,
+  strongDiversificationTopCountry: 65,
+  strongDiversificationOverlap: 8,
+  strongDiversificationUnique: 1500,
+  balancedTopFive: 24,
+  balancedTopSector: 30,
+  balancedTopCountry: 75
+};
 
-  if (overlapSummary?.sharedCount) {
-    const overlapScore = overlapSummary.totalOverlap
-      + overlapSummary.sharedCount / 20
-      + (overlapSummary.topHolding ? overlapSummary.topHolding.overlap : 0);
-    insights.push({
-      type: 'overlap',
-      score: overlapScore,
-      headline: formatPercent(overlapSummary.totalOverlap),
-      prefix: 'of your portfolio overlaps between',
-      accent: `${overlapSummary.tickerA} and ${overlapSummary.tickerB}.`,
-      secondary: `${formatMoney(portfolioValue * overlapSummary.totalOverlap / 100)} is repeated across both funds.`,
-      rows: overlapSummary.shared.slice(0, 3).map(holding => ({
-          kind: 'security',
-          label: holding.name,
-          symbol: holding.symbol,
-          logoTicker: holding.logoTicker || holding.symbol,
-          value: formatPercent(holding.overlap)
-        }))
-    });
-  }
+function entryWeight(entries, label) {
+  return entries.find(([name]) => name === label)?.[1] || 0;
+}
 
-  if (topFive.length) {
-    insights.push({
-      type: 'top-company',
-      score: topFiveWeight + topFive[0].weight * 1.5,
-      headline: formatInsightRatio(topFiveWeight, 100),
-      prefix: `of your portfolio is in just ${topFive.length} companies.`,
-      accent: '',
-      secondary: `${topFive[0].name} is your largest single company position.`,
-      rows: topFive.map(holding => ({
-          kind: 'security',
-          label: holding.name,
-          symbol: holding.symbol,
-          logoTicker: holdingLogoTicker(holding),
-          value: formatPercent(holding.weight)
-        })).concat([{ label: `Top ${topFive.length}`, value: formatPercent(topFiveWeight) }])
-    });
-  }
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
 
-  if (topCountry) {
-    const topCountryWeight = topCountry[1];
-    const countryGap = topCountryWeight - (secondCountry?.[1] || 0);
-    const accent = topCountry[0] === 'United States' ? 'U.S.' : topCountry[0];
-    const canadaRow = geography.find(([name]) => name === 'Canada');
-    const comparisonTarget = canadaRow?.[0] || secondCountry?.[0] || null;
-    const comparisonValue = canadaRow?.[1] || secondCountry?.[1] || 0;
-    insights.push({
-      type: 'country',
-      score: topCountryWeight + countryGap * 0.6,
-      headline: formatPercent(topCountryWeight),
-      prefix: 'of your portfolio is ultimately invested in the',
-      accent,
-      secondary: comparisonTarget && comparisonValue
-        ? `Your ${accent} exposure is ${formatMultiplier(topCountryWeight, comparisonValue)} larger than ${comparisonTarget === 'Rest of world' ? 'the rest of world' : comparisonTarget}.`
-        : `${accent} is your largest geographic exposure after looking through the ETFs.`,
-      rows: topThreeCountries.map(([name, weight]) => ({
-        kind: 'country',
-        label: name,
-        value: formatPercent(weight)
-      }))
-    });
-  }
+function holdingList(holdings, limit = 3) {
+  return holdings.slice(0, limit).map(holding => holding.name).join(', ');
+}
 
-  if (topSector) {
-    const topSectorWeight = topSector[1];
-    const sectorGap = topSectorWeight - (secondSector?.[1] || 0);
-    insights.push({
-      type: 'sector',
-      score: topSectorWeight + sectorGap * 0.8,
-      headline: formatPercent(topSectorWeight),
-      prefix: 'of your portfolio is invested in',
-      accent: topSector[0],
-      secondary: secondSector
-        ? `${topSector[0]} is ${formatMultiplier(topSectorWeight, secondSector[1])} larger than ${secondSector[0]}.`
-        : `${topSector[0]} is your largest sector exposure after looking through the ETFs.`,
-      rows: topThreeSectors.map(([name, weight]) => ({
-        label: name,
-        value: formatPercent(weight)
-      }))
-    });
-  }
+function topAllocationLine(entries, limit = 2) {
+  return entries.slice(0, limit).map(([label, weight]) => `${label} ${formatPercent(weight)}`).join(' · ');
+}
 
-  if (topDuplicate) {
-    insights.push({
-      type: 'duplication',
-      score: topDuplicate.weight * 2 + topDuplicate.etfCount * 12,
-      headline: `${topDuplicate.etfCount}`,
-      prefix: 'ETFs hold',
-      accent: topDuplicate.name,
-      secondary: `${formatMoney(portfolioValue * topDuplicate.weight / 100)} of your portfolio comes from that combined position.`,
-      rows: topDuplicate.groupedSources.map(source => ({
-          label: source.ticker,
-          value: formatPercent(source.contribution)
-        })).concat([{ label: 'Total exposure', value: formatPercent(topDuplicate.weight) }])
-    });
-  }
-
-  const preferredOrder = {
-    overlap: 5,
-    duplication: 4,
-    'top-company': 3,
-    country: 2,
-    sector: 1
+function etfGeographyContribution(ticker, portfolioWeight) {
+  const geography = Object.fromEntries(summarizePortfolioGeography([ticker], [100]));
+  const usWeight = geography['United States'] || 0;
+  const canadaWeight = geography.Canada || 0;
+  const nonUsWeight = Math.max(0, 100 - usWeight);
+  return {
+    ticker,
+    portfolioWeight,
+    usContribution: portfolioWeight * usWeight / 100,
+    canadaContribution: portfolioWeight * canadaWeight / 100,
+    nonUsContribution: portfolioWeight * nonUsWeight / 100
   };
-  return insights.sort((left, right) => right.score - left.score || preferredOrder[right.type] - preferredOrder[left.type])[0] || null;
+}
+
+function buildStandoutMetrics(snapshot) {
+  const { tickers, weights, holdings, sectors, geography, uniqueEstimate } = snapshot;
+  const topFive = holdings.slice(0, 5);
+  const topTen = holdings.slice(0, 10);
+  const topThree = holdings.slice(0, 3);
+  const topFiveWeight = topFive.reduce((sum, holding) => sum + holding.weight, 0);
+  const topTenWeight = topTen.reduce((sum, holding) => sum + holding.weight, 0);
+  const topThreeWeight = topThree.reduce((sum, holding) => sum + holding.weight, 0);
+  const topHolding = holdings[0] || null;
+  const topCountry = geography[0] || null;
+  const secondCountry = geography[1] || null;
+  const topSector = sectors[0] || null;
+  const secondSector = sectors[1] || null;
+  const overlapSummary = strongestPortfolioOverlap(tickers, weights);
+  const duplicateHoldings = holdings
+    .filter(holding => (holding.sources?.length || 0) > 1)
+    .map(holding => ({
+      ...holding,
+      groupedSources: groupedSourcesByTicker(holding.sources)
+    }))
+    .sort((left, right) => right.weight - left.weight);
+  const duplicateTopFiveCount = topFive.filter(holding => (holding.sources?.length || 0) > 1).length;
+  const duplicatedWeight = duplicateHoldings.reduce((sum, holding) => sum + holding.weight, 0);
+  const completeCount = tickers.filter(ticker => flattenedDataIsComplete(ticker)).length;
+  const dataConfidence = tickers.length ? completeCount / tickers.length : 0;
+  const geographyContributors = tickers
+    .map((ticker, index) => etfGeographyContribution(ticker, weights[index] || 0))
+    .sort((left, right) => right.nonUsContribution - left.nonUsContribution);
+  const totalNonUs = geographyContributors.reduce((sum, item) => sum + item.nonUsContribution, 0);
+  const totalCanada = geographyContributors.reduce((sum, item) => sum + item.canadaContribution, 0);
+  const topDiversifier = geographyContributors[0] || null;
+  const diversificationShare = totalNonUs ? (topDiversifier?.nonUsContribution || 0) / totalNonUs * 100 : 0;
+  const canadaDriver = totalCanada
+    ? [...geographyContributors].sort((left, right) => right.canadaContribution - left.canadaContribution)[0]
+    : null;
+
+  return {
+    tickers,
+    holdings,
+    sectors,
+    geography,
+    uniqueEstimate,
+    topThree,
+    topFive,
+    topTen,
+    topHolding,
+    topCountry,
+    secondCountry,
+    topSector,
+    secondSector,
+    topThreeWeight,
+    topFiveWeight,
+    topTenWeight,
+    duplicateHoldings,
+    duplicateTopFiveCount,
+    duplicatedWeight,
+    overlapSummary,
+    dataConfidence,
+    totalNonUs,
+    totalCanada,
+    topDiversifier,
+    diversificationShare,
+    canadaDriver
+  };
+}
+
+function buildStandoutInsight(snapshot, portfolioValue) {
+  const metrics = buildStandoutMetrics(snapshot);
+  const insights = [];
+  const {
+    tickers,
+    holdings,
+    geography,
+    sectors,
+    uniqueEstimate,
+    topThree,
+    topFive,
+    topHolding,
+    topCountry,
+    secondCountry,
+    topSector,
+    secondSector,
+    topThreeWeight,
+    topFiveWeight,
+    topTenWeight,
+    duplicateHoldings,
+    duplicateTopFiveCount,
+    duplicatedWeight,
+    overlapSummary,
+    dataConfidence,
+    totalNonUs,
+    topDiversifier,
+    diversificationShare,
+    canadaDriver
+  } = metrics;
+
+  if (!holdings.length) return null;
+
+  if (topFiveWeight >= STANDOUT_RULES.hiddenConcentrationTopFive || topTenWeight >= STANDOUT_RULES.hiddenConcentrationTopTen) {
+    insights.push({
+      type: 'hidden_concentration',
+      headline: 'More concentrated than it looks',
+      primaryMetric: {
+        value: formatPercent(topFiveWeight),
+        label: 'in your top 5 companies'
+      },
+      context: duplicateTopFiveCount >= 2
+        ? `${duplicateTopFiveCount} of those top 5 show up through more than one ETF.`
+        : `${holdingList(topFive, 3)} set the pace at the top.`,
+      score: topFiveWeight * 2.2 + topTenWeight + duplicateTopFiveCount * 4 + (topHolding?.weight || 0) * 3 + dataConfidence * 10
+    });
+  }
+
+  if (topThreeWeight >= STANDOUT_RULES.megaCapTopThree && (topHolding?.weight || 0) >= STANDOUT_RULES.megaCapLargestHolding) {
+    insights.push({
+      type: 'mega_cap_concentration',
+      headline: 'A few giants drive this portfolio',
+      primaryMetric: {
+        value: formatPercent(topThreeWeight),
+        label: 'in your top 3 companies'
+      },
+      context: topHolding ? `${topHolding.name} alone is ${formatPercent(topHolding.weight)} of the portfolio.` : `${holdingList(topThree, 3)} dominate the top of the mix.`,
+      score: topThreeWeight * 2.4 + (topHolding?.weight || 0) * 4 + duplicateTopFiveCount * 2 + dataConfidence * 10
+    });
+  }
+
+  if (overlapSummary?.sharedCount && duplicatedWeight >= STANDOUT_RULES.duplicationWeight && overlapSummary.totalOverlap >= STANDOUT_RULES.duplicationOverlap) {
+    insights.push({
+      type: 'etf_duplication',
+      headline: 'Different ETFs, many of the same companies',
+      primaryMetric: {
+        value: formatPercent(duplicatedWeight),
+        label: 'held through multiple ETFs'
+      },
+      context: `${holdingList(duplicateHoldings, 3)} are the biggest repeated positions.`,
+      score: duplicatedWeight * 2.1 + overlapSummary.totalOverlap * 1.6 + duplicateTopFiveCount * 4 + dataConfidence * 8
+    });
+  }
+
+  if (overlapSummary?.sharedCount && overlapSummary.totalOverlap >= STANDOUT_RULES.similarExposureOverlap) {
+    const dominantCountryWeight = topCountry?.[1] || 0;
+    const dominantSectorWeight = topSector?.[1] || 0;
+    const focusLabel = dominantCountryWeight >= dominantSectorWeight
+      ? topCountry?.[0]
+      : topSector?.[0];
+    const focusWeight = Math.max(dominantCountryWeight, dominantSectorWeight);
+    if (focusLabel && focusWeight >= 28 && duplicateTopFiveCount >= 2) {
+      insights.push({
+        type: 'similar_exposure',
+        headline: 'Different funds. Similar bet.',
+        primaryMetric: {
+          value: formatPercent(focusWeight),
+          label: dominantCountryWeight >= dominantSectorWeight ? `in ${focusLabel}` : `in ${focusLabel}`
+        },
+        context: overlapSummary.topHolding
+          ? `${overlapSummary.topHolding.name} is the biggest shared position across the overlap.`
+          : `${duplicateTopFiveCount} of the top 5 are reinforced through multiple ETFs.`,
+        score: focusWeight * 1.8 + overlapSummary.totalOverlap * 1.4 + duplicateTopFiveCount * 5 + dataConfidence * 6
+      });
+    }
+  }
+
+  const usWeight = entryWeight(geography, 'United States');
+  const canadaWeight = entryWeight(geography, 'Canada');
+  const restWeight = entryWeight(geography, 'Rest of world');
+  const countryGap = usWeight - Math.max(canadaWeight, restWeight);
+
+  if (usWeight >= STANDOUT_RULES.usConcentration && countryGap >= STANDOUT_RULES.usDominanceGap) {
+    insights.push({
+      type: 'us_concentration',
+      headline: 'This is mostly a U.S. portfolio',
+      primaryMetric: {
+        value: formatPercent(usWeight),
+        label: 'in U.S. companies'
+      },
+      context: secondCountry ? `${secondCountry[0]} is a distant second at ${formatPercent(secondCountry[1])}.` : 'The rest of the world is a small minority of the mix.',
+      score: usWeight * 1.7 + countryGap * 1.2 + dataConfidence * 10
+    });
+  }
+
+  if (canadaWeight >= STANDOUT_RULES.canadaTilt && canadaWeight > restWeight) {
+    insights.push({
+      type: 'canada_tilt',
+      headline: 'You have a strong Canada tilt',
+      primaryMetric: {
+        value: formatPercent(canadaWeight),
+        label: 'in Canadian companies'
+      },
+      context: canadaDriver ? `${canadaDriver.ticker} contributes the biggest share of that Canada weight.` : `${topAllocationLine(geography, 2)} drives the regional mix.`,
+      score: canadaWeight * 2 + Math.max(0, canadaWeight - restWeight) * 1.4 + dataConfidence * 8
+    });
+  }
+
+  if ((topSector?.[1] || 0) >= STANDOUT_RULES.sectorConcentration) {
+    const sectorGap = (topSector?.[1] || 0) - (secondSector?.[1] || 0);
+    if (sectorGap >= STANDOUT_RULES.sectorDominanceGap) {
+      insights.push({
+        type: 'sector_concentration',
+        headline: `${topSector[0]} is driving your portfolio`,
+        primaryMetric: {
+          value: formatPercent(topSector[1]),
+          label: `in ${topSector[0]}`
+        },
+        context: secondSector ? `${secondSector[0]} is next at ${formatPercent(secondSector[1])}.` : `${topSector[0]} is the clearest sector tilt in the mix.`,
+        score: topSector[1] * 2 + sectorGap * 1.3 + dataConfidence * 8
+      });
+    }
+  }
+
+  if (tickers.length > 1 && totalNonUs >= STANDOUT_RULES.diversificationInternational && diversificationShare >= STANDOUT_RULES.diversificationContributorShare && topDiversifier) {
+    insights.push({
+      type: 'diversification_contributor',
+      headline: `${topDiversifier.ticker} changes the geographic mix`,
+      primaryMetric: {
+        value: formatPercent(totalNonUs),
+        label: 'of your portfolio is outside the U.S.'
+      },
+      context: `Almost all of that comes through ${topDiversifier.ticker}.`,
+      score: diversificationShare * 1.8 + totalNonUs * 1.2 + dataConfidence * 8
+    });
+  }
+
+  if (
+    topFiveWeight <= STANDOUT_RULES.strongDiversificationTopFive &&
+    (topSector?.[1] || 0) <= STANDOUT_RULES.strongDiversificationTopSector &&
+    (topCountry?.[1] || 0) <= STANDOUT_RULES.strongDiversificationTopCountry &&
+    (overlapSummary?.totalOverlap || 0) <= STANDOUT_RULES.strongDiversificationOverlap &&
+    uniqueEstimate >= STANDOUT_RULES.strongDiversificationUnique
+  ) {
+    insights.push({
+      type: 'strong_diversification',
+      headline: 'This mix is genuinely broad',
+      primaryMetric: {
+        value: formatInteger(uniqueEstimate),
+        label: 'underlying securities in the look-through'
+      },
+      context: `Top 5 companies are only ${formatPercent(topFiveWeight)}, and no single theme dominates.`,
+      score: 70 + uniqueEstimate / 80 - topFiveWeight * 0.8 - (topSector?.[1] || 0) * 0.6 - (topCountry?.[1] || 0) * 0.5 + dataConfidence * 10
+    });
+  }
+
+  if (!insights.length) {
+    const balancedEnough =
+      topFiveWeight <= STANDOUT_RULES.balancedTopFive &&
+      (topSector?.[1] || 0) <= STANDOUT_RULES.balancedTopSector &&
+      (topCountry?.[1] || 0) <= STANDOUT_RULES.balancedTopCountry;
+    insights.push({
+      type: 'balanced_fallback',
+      headline: balancedEnough ? 'Nothing dominates this portfolio' : 'The biggest risks are at the top',
+      primaryMetric: {
+        value: formatPercent(topFiveWeight),
+        label: 'in your top 5 companies'
+      },
+      context: balancedEnough
+        ? `${topSector ? `${topSector[0]} leads at ${formatPercent(topSector[1])}` : 'No sector dominates'}, while ${topCountry ? `${topCountry[0]} is ${formatPercent(topCountry[1])}` : 'geography stays mixed'}.`
+        : duplicateTopFiveCount >= 2
+          ? `${duplicateTopFiveCount} of the top 5 still appear through multiple ETFs.`
+          : `${holdingList(topFive, 3)} are the main positions to watch.`,
+      score: balancedEnough ? 45 : 25
+    });
+  }
+
+  return insights.sort((left, right) => right.score - left.score || left.headline.localeCompare(right.headline))[0] || null;
 }
 
 function exposureInsightMarkup(snapshot, uniqueEstimate) {
@@ -1382,16 +1567,17 @@ function exposureInsightMarkup(snapshot, uniqueEstimate) {
 
   if (!snapshot.holdings.length || !insight) {
     return `<p class="insight-kicker">What stands out</p>
-      <div class="insight-lead insight-lead-empty"><strong>${state.tickers.length}</strong><span><b>ETF mix analyzed</b><small>Exposure details are not available yet.</small></span></div>`;
+      <h3 class="insight-headline">ETF mix analyzed</h3>
+      <div class="insight-metric"><strong>${state.tickers.length}</strong><span>selected ETF${state.tickers.length === 1 ? '' : 's'}</span></div>`;
   }
 
   return `<p class="insight-kicker">What stands out</p>
-    <div class="insight-lead insight-lead-stacked">
-      <strong>${insight.headline}</strong>
-      <span><b>${insight.prefix}${insight.accent ? ` <em>${insight.accent}</em>` : ''}</b></span>
+    <h3 class="insight-headline">${insight.headline}</h3>
+    <div class="insight-metric">
+      <strong>${insight.primaryMetric.value}</strong>
+      <span>${insight.primaryMetric.label}</span>
     </div>
-    <p class="insight-secondary">${insight.secondary}</p>
-    ${insightRowsMarkup(insight.rows)}`;
+    ${insight.context ? `<p class="insight-secondary">${insight.context}</p>` : ''}`;
 }
 
 const builder = document.querySelector('#builder');
