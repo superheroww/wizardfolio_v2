@@ -25,12 +25,12 @@ jobs:
       - run: npm run data:update
       - name: Commit validated dataset changes
         run: |
-          if git diff --quiet -- public/data; then
+          git add -f public/data
+          if git diff --cached --quiet -- public/data; then
             echo "Issuer data is unchanged"
             exit 0
           fi
           git config user.name "wizardfolio-data-bot"
           git config user.email "wizardfolioco@gmail.com"
-          git add public/data
           git commit -m "Update validated ETF holdings"
           git push

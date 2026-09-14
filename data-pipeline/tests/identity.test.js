@@ -18,3 +18,7 @@ test('ISIN takes precedence over ticker and exchange', () => {
 test('ETF references use a distinct identity namespace', () => {
   assert.equal(securityId({ type: 'etf', ticker: 'XIC.TO' }), 'ETF:XIC.TO');
 });
+
+test('bonds without tickers use their issuer identifier', () => {
+  assert.equal(securityId({ type: 'bond', isin: 'US91282ABC12', name: 'Treasury Note' }), 'ISIN:US91282ABC12');
+});
