@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wizardfolio.com/schemas/security.schema.json",
+  "title": "WizardFolio normalized holding",
+  "type": "object",
+  "required": ["id", "type", "ticker", "name", "weight"],
+  "properties": {
+    "id": { "type": "string" },
+    "type": { "enum": ["stock", "etf", "bond"] },
+    "ticker": { "type": "string" },
+    "name": { "type": "string" },
+    "weight": { "type": "number", "exclusiveMinimum": 0 },
+    "exchange": { "type": ["string", "null"] },
+    "marketCurrency": { "type": ["string", "null"] },
+    "country": { "type": ["string", "null"] },
+    "sector": { "type": ["string", "null"] },
+    "isin": { "type": ["string", "null"] },
+    "cusip": { "type": ["string", "null"] },
+    "sedol": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

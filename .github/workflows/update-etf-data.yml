@@ -1,0 +1,36 @@
+name: Update ETF data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 10 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: etf-data-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm test
+      - run: npm run data:update
+      - name: Commit validated dataset changes
+        run: |
+          if git diff --quiet -- public/data; then
+            echo "Issuer data is unchanged"
+            exit 0
+          fi
+          git config user.name "wizardfolio-data-bot"
+          git config user.email "wizardfolioco@gmail.com"
+          git add public/data
+          git commit -m "Update validated ETF holdings"
+          git push
