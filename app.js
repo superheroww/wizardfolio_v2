@@ -236,6 +236,25 @@ function normalizeName(value) {
   return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 }
 
+function resolveEtfTicker(value) {
+  const ticker = normalizeIdentifier(value);
+  if (!ticker) return null;
+  const candidates = ticker.endsWith('.TO')
+    ? [ticker, ticker.slice(0, -3)]
+    : [ticker, `${ticker}.TO`];
+  return candidates.find(candidate => Boolean(etfs[candidate])) || null;
+}
+
+function hasConstituentData(ticker) {
+  const etf = etfs[ticker];
+  if (!etf) return false;
+  const holdings = etf.holdings;
+  const hasDirectHoldings = Array.isArray(holdings)
+    ? holdings.length > 0
+    : Boolean(holdings && Object.keys(holdings).length);
+  return hasDirectHoldings || Boolean(etf.aggregateHoldings?.length);
+}
+
 function securityKey(security, fallbackExchange = '') {
   if (security.isin) return `ISIN:${normalizeIdentifier(security.isin)}`;
   if (security.cusip) return `CUSIP:${normalizeIdentifier(security.cusip)}`;
@@ -274,10 +293,10 @@ function legacyHoldingRows(etf, ownerTicker) {
     const [name, legacyIconOrDuplicateName, legacyWeightOrIcon, fourthValue] = row;
     const icon = typeof fourthValue === 'number' ? legacyWeightOrIcon : legacyIconOrDuplicateName;
     const weight = typeof fourthValue === 'number' ? fourthValue : legacyWeightOrIcon;
-    const childIsEtf = Boolean(etfs[ticker]);
+    const childEtfTicker = resolveEtfTicker(ticker);
     const metadata = legacySecurityMetadata[ticker] || {};
-    return childIsEtf
-      ? { type: 'etf', ticker, name, weight }
+    return childEtfTicker
+      ? { type: 'etf', ticker: childEtfTicker, name, weight }
       : {
           type: 'stock', ticker, name, icon, weight,
           exchange: etf.exchange,
@@ -289,7 +308,14 @@ function legacyHoldingRows(etf, ownerTicker) {
 
 function holdingRows(ticker) {
   const etf = etfs[ticker];
-  return legacyHoldingRows(etf, ticker).map(row => ({ ...row, weight: Number(row.weight) || 0 }));
+  return legacyHoldingRows(etf, ticker).map(row => {
+    const childEtfTicker = row.type === 'etf' ? resolveEtfTicker(row.ticker) : null;
+    return {
+      ...row,
+      ticker: childEtfTicker || row.ticker,
+      weight: Number(row.weight) || 0
+    };
+  });
 }
 
 function parseCsvLine(line) {
@@ -365,7 +391,7 @@ function flattenEtf(ticker, parentWeight = 1, path = [], visited = new Set()) {
   const rows = holdingRows(ticker);
   const sourcePath = [...path, ticker];
 
-  const childDataAvailable = rows.some(row => row.type === 'etf' && etfs[row.ticker]?.holdings?.length);
+  const childDataAvailable = rows.some(row => row.type === 'etf' && hasConstituentData(row.ticker));
   const aggregateHoldings = etf.aggregateHoldings;
   if (aggregateHoldings?.length && !childDataAvailable) {
     return aggregateHoldings.map(row => ({
@@ -1952,3 +1978,93 @@ renderExploreCombos();
 applyExploreFilter(state.exploreFilter);
 renderBuilder();
 renderPortfolio();
+
+
+function runCalculationAudit() {
+  const fixtureTickers = ['AUDITPARENT', 'AUDITCHILD.TO', 'AUDITDIRECT', 'AUDITCYCLEA', 'AUDITCYCLEB'];
+  Object.assign(etfs, {
+    AUDITPARENT: {
+      holdings: {
+        AUDITCHILD: ['Audit Child ETF', '•', 40],
+        ROOTCO: ['Root Company', '•', 60]
+      },
+      sectors: {},
+      geography: {}
+    },
+    'AUDITCHILD.TO': {
+      holdings: {
+        ACME: ['Acme', '•', 50],
+        OTHERCO: ['Other Company', '•', 50]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITDIRECT: {
+      holdings: {
+        ACME: ['Acme', '•', 20]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITCYCLEA: {
+      holdings: {
+        AUDITCYCLEB: ['Cycle B', '•', 100]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITCYCLEB: {
+      holdings: {
+        AUDITCYCLEA: ['Cycle A', '•', 100]
+      },
+      sectors: {},
+      geography: {}
+    }
+  });
+
+  try {
+    const nested = aggregateFlattenedHoldings(['AUDITPARENT'], [100]);
+    const blended = aggregateFlattenedHoldings(['AUDITPARENT', 'AUDITDIRECT'], [50, 50]);
+    const nestedAcme = nested.find(holding => holding.symbol === 'ACME');
+    const blendedAcme = blended.find(holding => holding.symbol === 'ACME');
+    const cycle = aggregateFlattenedHoldings(['AUDITCYCLEA'], [100]);
+    const checks = [
+      {
+        check: 'Ticker alias resolves to .TO child ETF',
+        expected: 'AUDITCHILD.TO',
+        actual: holdingRows('AUDITPARENT')[0]?.ticker,
+        pass: holdingRows('AUDITPARENT')[0]?.ticker === 'AUDITCHILD.TO'
+      },
+      {
+        check: 'ETF → ETF → stock exposure multiplies',
+        expected: 20,
+        actual: nestedAcme?.weight,
+        pass: Math.abs((nestedAcme?.weight || 0) - 20) < 1e-9
+      },
+      {
+        check: 'Duplicate stocks aggregate across paths',
+        expected: 20,
+        actual: blendedAcme?.weight,
+        pass: Math.abs((blendedAcme?.weight || 0) - 20) < 1e-9
+      },
+      {
+        check: 'Circular ETF references terminate',
+        expected: 0,
+        actual: cycle.length,
+        pass: cycle.length === 0
+      }
+    ];
+    console.table(checks);
+    if (checks.some(check => !check.pass)) {
+      throw new Error('Calculation audit failed. See console table for evidence.');
+    }
+    return checks;
+  } finally {
+    fixtureTickers.forEach(ticker => delete etfs[ticker]);
+  }
+}
+
+window.runCalculationAudit = runCalculationAudit;
+if (new URLSearchParams(window.location.search).get('audit') === '1') {
+  runCalculationAudit();
+}
