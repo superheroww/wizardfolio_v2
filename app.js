@@ -236,6 +236,25 @@ function normalizeName(value) {
   return String(value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 }
 
+function resolveEtfTicker(value) {
+  const ticker = normalizeIdentifier(value);
+  if (!ticker) return null;
+  const candidates = ticker.endsWith('.TO')
+    ? [ticker, ticker.slice(0, -3)]
+    : [ticker, `${ticker}.TO`];
+  return candidates.find(candidate => Boolean(etfs[candidate])) || null;
+}
+
+function hasConstituentData(ticker) {
+  const etf = etfs[ticker];
+  if (!etf) return false;
+  const holdings = etf.holdings;
+  const hasDirectHoldings = Array.isArray(holdings)
+    ? holdings.length > 0
+    : Boolean(holdings && Object.keys(holdings).length);
+  return hasDirectHoldings || Boolean(etf.aggregateHoldings?.length);
+}
+
 function securityKey(security, fallbackExchange = '') {
   if (security.isin) return `ISIN:${normalizeIdentifier(security.isin)}`;
   if (security.cusip) return `CUSIP:${normalizeIdentifier(security.cusip)}`;
@@ -274,10 +293,10 @@ function legacyHoldingRows(etf, ownerTicker) {
     const [name, legacyIconOrDuplicateName, legacyWeightOrIcon, fourthValue] = row;
     const icon = typeof fourthValue === 'number' ? legacyWeightOrIcon : legacyIconOrDuplicateName;
     const weight = typeof fourthValue === 'number' ? fourthValue : legacyWeightOrIcon;
-    const childIsEtf = Boolean(etfs[ticker]);
+    const childEtfTicker = resolveEtfTicker(ticker);
     const metadata = legacySecurityMetadata[ticker] || {};
-    return childIsEtf
-      ? { type: 'etf', ticker, name, weight }
+    return childEtfTicker
+      ? { type: 'etf', ticker: childEtfTicker, name, weight }
       : {
           type: 'stock', ticker, name, icon, weight,
           exchange: etf.exchange,
@@ -289,7 +308,14 @@ function legacyHoldingRows(etf, ownerTicker) {
 
 function holdingRows(ticker) {
   const etf = etfs[ticker];
-  return legacyHoldingRows(etf, ticker).map(row => ({ ...row, weight: Number(row.weight) || 0 }));
+  return legacyHoldingRows(etf, ticker).map(row => {
+    const childEtfTicker = row.type === 'etf' ? resolveEtfTicker(row.ticker) : null;
+    return {
+      ...row,
+      ticker: childEtfTicker || row.ticker,
+      weight: Number(row.weight) || 0
+    };
+  });
 }
 
 function parseCsvLine(line) {
@@ -365,7 +391,7 @@ function flattenEtf(ticker, parentWeight = 1, path = [], visited = new Set()) {
   const rows = holdingRows(ticker);
   const sourcePath = [...path, ticker];
 
-  const childDataAvailable = rows.some(row => row.type === 'etf' && etfs[row.ticker]?.holdings?.length);
+  const childDataAvailable = rows.some(row => row.type === 'etf' && hasConstituentData(row.ticker));
   const aggregateHoldings = etf.aggregateHoldings;
   if (aggregateHoldings?.length && !childDataAvailable) {
     return aggregateHoldings.map(row => ({
