@@ -3,7 +3,8 @@
 
 const fs = require('node:fs/promises');
 const path = require('node:path');
-const { parse, sourceUrl } = require('./adapters/blackrock');
+const blackrock = require('./adapters/blackrock');
+const vanguard = require('./adapters/vanguard');
 const { fixtureFund, loadCurrentFixture } = require('./lib/fixture');
 const { checksum, ensureDirectory, readJson, writeJson } = require('./lib/io');
 const { securityId } = require('./lib/identity');
@@ -20,14 +21,17 @@ function dateStamp(date = new Date()) {
 }
 
 async function downloadFund(fund) {
-  const url = sourceUrl(fund);
+  const adapter = fund.issuer.startsWith('blackrock') ? blackrock : fund.issuer.startsWith('vanguard') ? vanguard : null;
+  if (!adapter) throw new Error(`${fund.symbol}: no adapter for ${fund.issuer}`);
+  const url = adapter.sourceUrl(fund);
   const response = await fetch(url, { headers: { 'user-agent': 'WizardFolio data pipeline/1.0' } });
   if (!response.ok) throw new Error(`${fund.symbol}: issuer returned HTTP ${response.status}`);
   const body = await response.text();
   const directory = path.join(rawRoot, dateStamp());
   await ensureDirectory(directory);
-  await fs.writeFile(path.join(directory, `${fund.symbol.replace(/[^A-Z0-9.-]/gi, '_')}.csv`), body, 'utf8');
-  return parse(body, fund, { sourceUrl: url, retrievedAt: new Date().toISOString(), sourceChecksum: checksum(body) });
+  const extension = fund.issuer.startsWith('vanguard') ? 'json' : 'csv';
+  await fs.writeFile(path.join(directory, `${fund.symbol.replace(/[^A-Z0-9.-]/gi, '_')}.${extension}`), body, 'utf8');
+  return adapter.parse(body, fund, { sourceUrl: url, retrievedAt: new Date().toISOString(), sourceChecksum: checksum(body) });
 }
 
 function serializeFund(fund, validation) {
