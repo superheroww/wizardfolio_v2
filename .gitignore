@@ -12,3 +12,6 @@ build/
 
 # OS files
 .DS_Store
+data-pipeline/raw/*
+!data-pipeline/raw/.gitkeep
+public/data/

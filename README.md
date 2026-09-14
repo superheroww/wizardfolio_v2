@@ -30,3 +30,22 @@ so you can add or reorder combinations without editing the HTML.
 Legacy fixture values remain illustrative and must not be presented as live or
 investment-grade data. A future API adapter can replace `window.WIZARD_FOLIO_DATA` while
 preserving the typed ETF object shape.
+
+## Data foundation
+
+The first version of the reusable holdings pipeline lives in `data-pipeline/`. It keeps
+issuer formats outside the browser, identifies securities by ISIN or exchange-qualified
+ticker, validates coverage before publishing, and generates a versioned manifest.
+
+Run the offline migration check against the current checked-in iShares fixture:
+
+```sh
+npm test
+npm run data:update:fixture
+```
+
+Run `npm run data:update` to retrieve configured issuer files. Raw downloads are retained
+under `data-pipeline/raw/<date>/`. Only funds that pass the publication rules are written
+to `public/data`; a failed or partial import is recorded in the manifest and is not
+published as complete data. The existing browser dataset is intentionally unchanged
+until the generated pipeline output passes the launch gates.

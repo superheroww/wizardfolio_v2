@@ -1,0 +1,12 @@
+{
+  "name": "wizardfolio",
+  "private": true,
+  "scripts": {
+    "data:update": "node data-pipeline/cli.js",
+    "data:update:fixture": "node data-pipeline/cli.js --fixture",
+    "test": "node --test data-pipeline/tests/*.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
