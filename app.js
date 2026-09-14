@@ -1978,3 +1978,93 @@ renderExploreCombos();
 applyExploreFilter(state.exploreFilter);
 renderBuilder();
 renderPortfolio();
+
+
+function runCalculationAudit() {
+  const fixtureTickers = ['AUDITPARENT', 'AUDITCHILD.TO', 'AUDITDIRECT', 'AUDITCYCLEA', 'AUDITCYCLEB'];
+  Object.assign(etfs, {
+    AUDITPARENT: {
+      holdings: {
+        AUDITCHILD: ['Audit Child ETF', '•', 40],
+        ROOTCO: ['Root Company', '•', 60]
+      },
+      sectors: {},
+      geography: {}
+    },
+    'AUDITCHILD.TO': {
+      holdings: {
+        ACME: ['Acme', '•', 50],
+        OTHERCO: ['Other Company', '•', 50]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITDIRECT: {
+      holdings: {
+        ACME: ['Acme', '•', 20]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITCYCLEA: {
+      holdings: {
+        AUDITCYCLEB: ['Cycle B', '•', 100]
+      },
+      sectors: {},
+      geography: {}
+    },
+    AUDITCYCLEB: {
+      holdings: {
+        AUDITCYCLEA: ['Cycle A', '•', 100]
+      },
+      sectors: {},
+      geography: {}
+    }
+  });
+
+  try {
+    const nested = aggregateFlattenedHoldings(['AUDITPARENT'], [100]);
+    const blended = aggregateFlattenedHoldings(['AUDITPARENT', 'AUDITDIRECT'], [50, 50]);
+    const nestedAcme = nested.find(holding => holding.symbol === 'ACME');
+    const blendedAcme = blended.find(holding => holding.symbol === 'ACME');
+    const cycle = aggregateFlattenedHoldings(['AUDITCYCLEA'], [100]);
+    const checks = [
+      {
+        check: 'Ticker alias resolves to .TO child ETF',
+        expected: 'AUDITCHILD.TO',
+        actual: holdingRows('AUDITPARENT')[0]?.ticker,
+        pass: holdingRows('AUDITPARENT')[0]?.ticker === 'AUDITCHILD.TO'
+      },
+      {
+        check: 'ETF → ETF → stock exposure multiplies',
+        expected: 20,
+        actual: nestedAcme?.weight,
+        pass: Math.abs((nestedAcme?.weight || 0) - 20) < 1e-9
+      },
+      {
+        check: 'Duplicate stocks aggregate across paths',
+        expected: 20,
+        actual: blendedAcme?.weight,
+        pass: Math.abs((blendedAcme?.weight || 0) - 20) < 1e-9
+      },
+      {
+        check: 'Circular ETF references terminate',
+        expected: 0,
+        actual: cycle.length,
+        pass: cycle.length === 0
+      }
+    ];
+    console.table(checks);
+    if (checks.some(check => !check.pass)) {
+      throw new Error('Calculation audit failed. See console table for evidence.');
+    }
+    return checks;
+  } finally {
+    fixtureTickers.forEach(ticker => delete etfs[ticker]);
+  }
+}
+
+window.runCalculationAudit = runCalculationAudit;
+if (new URLSearchParams(window.location.search).get('audit') === '1') {
+  runCalculationAudit();
+}
