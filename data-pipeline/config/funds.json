@@ -6,7 +6,7 @@
     { "id": "CA:TSX:XIC", "ticker": "XIC", "symbol": "XIC.TO", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "239837", "fileName": "XIC_holdings", "enabled": true },
     { "id": "CA:TSX:XEF", "ticker": "XEF", "symbol": "XEF.TO", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "251421", "fileName": "XEF_holdings", "enabled": true },
     { "id": "CA:TSX:XEC", "ticker": "XEC", "symbol": "XEC.TO", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "251423", "fileName": "XEC_holdings", "enabled": true },
-    { "id": "US:NYSEARCA:ITOT", "ticker": "ITOT", "symbol": "ITOT", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "enabled": false, "note": "Current fixture is derived from XTOT and must be replaced by a direct US source." },
+    { "id": "US:NYSEARCA:ITOT", "ticker": "ITOT", "symbol": "ITOT", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239724", "productSlug": "ishares-core-sp-total-us-stock-market-etf", "fileName": "ITOT_holdings", "enabled": true },
 
     { "symbol": "VEQT.TO", "country": "CA", "issuer": "vanguard-ca", "enabled": false },
     { "symbol": "ZEQT.TO", "country": "CA", "issuer": "bmo", "enabled": false },
@@ -32,7 +32,7 @@
 
     { "symbol": "VOO", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "SPY", "country": "US", "issuer": "state-street", "enabled": false },
-    { "symbol": "IVV", "country": "US", "issuer": "blackrock-us", "enabled": false },
+    { "id": "US:NYSEARCA:IVV", "ticker": "IVV", "symbol": "IVV", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239726", "productSlug": "ishares-core-sp-500-etf", "fileName": "IVV_holdings", "enabled": true },
     { "symbol": "VTI", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "SCHB", "country": "US", "issuer": "schwab", "enabled": false },
     { "symbol": "QQQ", "country": "US", "issuer": "invesco", "enabled": false },
@@ -40,9 +40,9 @@
     { "symbol": "VT", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "VXUS", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "VEA", "country": "US", "issuer": "vanguard-us", "enabled": false },
-    { "symbol": "IEFA", "country": "US", "issuer": "blackrock-us", "enabled": false },
+    { "id": "US:CBOEBZX:IEFA", "ticker": "IEFA", "symbol": "IEFA", "country": "US", "exchange": "Cboe BZX", "currency": "USD", "issuer": "blackrock-us", "productId": "244049", "productSlug": "ishares-core-msci-eafe-etf", "fileName": "IEFA_holdings", "enabled": true },
     { "symbol": "VWO", "country": "US", "issuer": "vanguard-us", "enabled": false },
-    { "symbol": "IEMG", "country": "US", "issuer": "blackrock-us", "enabled": false },
+    { "id": "US:NYSEARCA:IEMG", "ticker": "IEMG", "symbol": "IEMG", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "244050", "productSlug": "ishares-core-msci-emerging-markets-etf", "fileName": "IEMG_holdings", "enabled": true },
     { "symbol": "SCHD", "country": "US", "issuer": "schwab", "enabled": false },
     { "symbol": "VIG", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "VYM", "country": "US", "issuer": "vanguard-us", "enabled": false },
@@ -50,9 +50,9 @@
     { "symbol": "JEPQ", "country": "US", "issuer": "jpmorgan", "enabled": false },
     { "symbol": "VB", "country": "US", "issuer": "vanguard-us", "enabled": false },
     { "symbol": "VO", "country": "US", "issuer": "vanguard-us", "enabled": false },
-    { "symbol": "IWM", "country": "US", "issuer": "blackrock-us", "enabled": false },
+    { "id": "US:NYSEARCA:IWM", "ticker": "IWM", "symbol": "IWM", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239710", "productSlug": "ishares-russell-2000-etf", "fileName": "IWM_holdings", "enabled": true },
     { "symbol": "BND", "country": "US", "issuer": "vanguard-us", "enabled": false },
-    { "symbol": "AGG", "country": "US", "issuer": "blackrock-us", "enabled": false },
-    { "symbol": "SGOV", "country": "US", "issuer": "blackrock-us", "enabled": false }
+    { "id": "US:NYSEARCA:AGG", "ticker": "AGG", "symbol": "AGG", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239458", "productSlug": "ishares-core-total-us-bond-market-etf", "fileName": "AGG_holdings", "enabled": true },
+    { "id": "US:NYSEARCA:SGOV", "ticker": "SGOV", "symbol": "SGOV", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "314116", "productSlug": "ishares-0-3-month-treasury-bond-etf", "fileName": "SGOV_holdings", "enabled": true }
   ]
 }

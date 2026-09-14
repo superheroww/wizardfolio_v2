@@ -11,6 +11,9 @@ function securityId(security) {
   if (security.exchange && security.ticker) {
     return `LISTING:${compact(security.exchange)}:${clean(security.ticker)}`;
   }
+  if ((security.type === 'cash' || security.type === 'other') && security.name) {
+    return `ASSET:${clean(security.type)}:${compact(security.name)}:${compact(security.marketCurrency)}`;
+  }
   throw new Error(`Security lacks a stable identity: ${security.name || security.ticker || 'unknown'}`);
 }
 

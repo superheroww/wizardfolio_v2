@@ -45,6 +45,8 @@ function serializeFund(fund, validation) {
     retrievedAt: fund.retrievedAt,
     sourceUrl: fund.sourceUrl,
     sourceChecksum: fund.sourceChecksum,
+    weightMethod: fund.weightMethod || 'issuer-reported',
+    reportedCoverage: fund.reportedCoverage === undefined ? null : Number(fund.reportedCoverage.toFixed(6)),
     coverageWeight: Number(validation.coverageWeight.toFixed(6)),
     quality: validation.quality,
     holdings: fund.holdings.map(holding => ({ ...holding, id: securityId(holding) }))

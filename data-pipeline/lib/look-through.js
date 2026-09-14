@@ -25,7 +25,7 @@ function flattenFund(symbol, funds, parentWeight = 1, path = [], visited = new S
     const exposure = parentWeight * holding.weight / 100;
     if (!exposure) return [];
     if (holding.type === 'etf') return flattenFund(holding.ticker, index, exposure, sourcePath, nextVisited);
-    return [{ ...holding, exposure, path: [...sourcePath, holding.ticker] }];
+    return [{ ...holding, exposure, path: [...sourcePath, holding.ticker || holding.name] }];
   });
 }
 
@@ -35,7 +35,7 @@ function aggregatePortfolio(allocations, funds) {
   for (const allocation of allocations) {
     for (const security of flattenFund(allocation.symbol, index, allocation.weight / 100)) {
       const id = securityId(security);
-      const row = result.get(id) || { id, ticker: security.ticker, name: security.name, weight: 0, paths: [] };
+      const row = result.get(id) || { id, ticker: security.ticker || null, name: security.name, weight: 0, paths: [] };
       const contribution = security.exposure * 100;
       row.weight += contribution;
       row.paths.push({ contribution, path: security.path });
