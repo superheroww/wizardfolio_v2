@@ -1,4 +1,5 @@
 const { etfs, presets: presetData } = window.WIZARD_FOLIO_DATA;
+const publishedData = window.WizardFolioDataClient.createClient({ store: etfs });
 const screens = document.querySelectorAll('.screen');
 const navButtons = document.querySelectorAll('nav button[data-screen]');
 const comboList = document.querySelector('#comboList');
@@ -183,7 +184,7 @@ function showScreen(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.querySelectorAll('[data-screen]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.screen)));
-document.addEventListener('click', event => {
+document.addEventListener('click', async event => {
   const presetButton = event.target.closest('[data-preset], [data-action]');
   if (!presetButton) return;
   if (presetButton.dataset.action === 'compare') {
@@ -200,6 +201,7 @@ document.addEventListener('click', event => {
     state.weights = [10, 45, 45];
     renderPortfolio();
     showScreen('portfolio');
+    await refreshPublishedFunds(state.tickers);
     return;
   }
   const preset = presetData[presetButton.dataset.preset];
@@ -208,6 +210,7 @@ document.addEventListener('click', event => {
   state.weights = [...preset.weights];
   renderPortfolio();
   showScreen('portfolio');
+  await refreshPublishedFunds(state.tickers);
 });
 
 function blendMap(field) {
@@ -1689,13 +1692,13 @@ function renderAddEtfMenu() {
   if (!addEtfMenuOpen) return;
 
   if (!available.length) {
-    addEtfMenu.innerHTML = '<p class="add-etf-empty">No more mock ETFs available.</p>';
+    addEtfMenu.innerHTML = '<p class="add-etf-empty">No ETFs available.</p>';
     return;
   }
 
   addEtfMenu.innerHTML = `
     <div class="add-etf-heading">
-      <p>All mock ETFs <span>${available.length}</span></p>
+      <p>All ETFs <span>${available.length}</span></p>
       <small>Scroll to see all</small>
     </div>
     <div class="add-etf-scroll" role="list">
@@ -1767,10 +1770,10 @@ function syncBuilderUi() {
   updateHomeInsights();
 }
 
-function addMockEtf(nextTicker) {
+async function addEtf(nextTicker) {
   const ticker = nextTicker || availableTickers()[0];
   if (!ticker) {
-    alert('No more mock ETFs are available to add.');
+    alert('No more ETFs are available to add.');
     return;
   }
   if (state.tickers.includes(ticker)) {
@@ -1785,9 +1788,10 @@ function addMockEtf(nextTicker) {
   toggleAddEtfMenu(false);
   renderBuilder();
   renderPortfolio();
+  await refreshPublishedFunds([ticker]);
 }
 
-function removeMockEtf(index) {
+function removeEtf(index) {
   if (state.tickers.length <= minFunds) {
     alert('Keep at least one ETF in the mix.');
     return;
@@ -1883,13 +1887,13 @@ builder.addEventListener('input', event => {
 builder.addEventListener('click', event => {
   const removeButton = event.target.closest('[data-remove-index]');
   if (!removeButton) return;
-  removeMockEtf(Number(removeButton.dataset.removeIndex));
+  removeEtf(Number(removeButton.dataset.removeIndex));
 });
 
 builder.addEventListener('click', event => {
   const addTickerButton = event.target.closest('[data-add-ticker]');
   if (!addTickerButton) return;
-  addMockEtf(addTickerButton.dataset.addTicker);
+  addEtf(addTickerButton.dataset.addTicker);
 });
 
 document.addEventListener('click', event => {
@@ -1978,6 +1982,30 @@ renderExploreCombos();
 applyExploreFilter(state.exploreFilter);
 renderBuilder();
 renderPortfolio();
+
+async function hydratePublishedData() {
+  try {
+    await publishedData.loadCatalog();
+    renderBuilder();
+    await publishedData.loadFunds(state.tickers);
+    renderBuilder();
+    renderPortfolio();
+  } catch (error) {
+    console.warn('Published ETF data is unavailable; using the static fallback.', error);
+  }
+}
+
+async function refreshPublishedFunds(tickers) {
+  try {
+    await publishedData.loadFunds(tickers);
+    renderBuilder();
+    renderPortfolio();
+  } catch (error) {
+    console.warn('Some ETFs are using static fallback data because published data could not be loaded.', error);
+  }
+}
+
+hydratePublishedData();
 
 
 function runCalculationAudit() {

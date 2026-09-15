@@ -107,13 +107,35 @@ async function main() {
     fixtureMode,
     funds: results.map(({ fund, validation }) => ({
       symbol: fund.symbol,
+      ticker: fund.ticker || String(fund.symbol || '').replace(/\.TO$/i, ''),
+      name: fund.name || fund.ticker || fund.symbol,
       country: fund.country,
+      exchange: fund.exchange || null,
+      currency: fund.currency || null,
+      issuer: fund.issuer,
       quality: validation.quality,
       coverageWeight: Number(validation.coverageWeight.toFixed(6)),
       publishable: validation.publishable,
       holdingsDate: fund.holdingsDate || null,
       errors: validation.errors,
       warnings: validation.warnings
+    }))
+  });
+  await writeJson(path.join(outputRoot, 'catalog.json'), {
+    schemaVersion: 1,
+    version,
+    generatedAt,
+    funds: publishable.map(({ fund, validation }) => ({
+      symbol: fund.symbol,
+      ticker: fund.ticker || String(fund.symbol || '').replace(/\.TO$/i, ''),
+      name: fund.name || fund.ticker || fund.symbol,
+      country: fund.country,
+      exchange: fund.exchange || null,
+      currency: fund.currency || null,
+      issuer: fund.issuer,
+      holdingsDate: fund.holdingsDate || null,
+      quality: validation.quality,
+      coverageWeight: Number(validation.coverageWeight.toFixed(6))
     }))
   });
 
