@@ -12,7 +12,9 @@
 
     { "symbol": "VEQT.TO", "country": "CA", "issuer": "vanguard-ca", "enabled": false },
     { "symbol": "ZEQT.TO", "country": "CA", "issuer": "bmo", "enabled": false },
-    { "symbol": "XGRO.TO", "country": "CA", "issuer": "blackrock-ca", "enabled": false },
+    { "id": "CA:TSX:XGRO", "ticker": "XGRO", "symbol": "XGRO.TO", "name": "iShares Core Growth ETF Portfolio", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "239447", "fileName": "XGRO_holdings", "childSymbols": ["ITOT", "XEF", "XIC", "XBB", "XEC", "XSH", "GOVT", "USIG"], "enabled": true },
+    { "id": "CA:TSX:XBB", "ticker": "XBB", "symbol": "XBB.TO", "name": "iShares Core Canadian Universe Bond Index ETF", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "239493", "fileName": "XBB_holdings", "enabled": true },
+    { "id": "CA:TSX:XSH", "ticker": "XSH", "symbol": "XSH.TO", "name": "iShares Core Canadian Short Term Corporate Bond Index ETF", "country": "CA", "exchange": "TSX", "currency": "CAD", "issuer": "blackrock-ca", "productId": "239492", "fileName": "XSH_holdings", "enabled": true },
     { "symbol": "VGRO.TO", "country": "CA", "issuer": "vanguard-ca", "enabled": false },
     { "symbol": "ZGRO.TO", "country": "CA", "issuer": "bmo", "enabled": false },
     { "symbol": "XBAL.TO", "country": "CA", "issuer": "blackrock-ca", "enabled": false },
@@ -37,7 +39,7 @@
     { "id": "US:NYSEARCA:IVV", "ticker": "IVV", "symbol": "IVV", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239726", "productSlug": "ishares-core-sp-500-etf", "fileName": "IVV_holdings", "enabled": true },
     { "id": "US:NYSEARCA:VTI", "ticker": "VTI", "symbol": "VTI", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "vanguard-us", "maxDataAgeDays": 45, "enabled": true },
     { "symbol": "SCHB", "country": "US", "issuer": "schwab", "enabled": false },
-    { "symbol": "QQQ", "country": "US", "issuer": "invesco", "enabled": false },
+    { "id": "US:NASDAQ:QQQ", "ticker": "QQQ", "symbol": "QQQ", "name": "Invesco QQQ Trust", "country": "US", "exchange": "NASDAQ", "currency": "USD", "issuer": "invesco", "cusip": "46090E103", "enabled": true },
     { "id": "US:NASDAQ:QQQM", "ticker": "QQQM", "symbol": "QQQM", "name": "Invesco NASDAQ 100 ETF", "country": "US", "exchange": "NASDAQ", "currency": "USD", "issuer": "invesco", "cusip": "46138G649", "enabled": true },
     { "id": "US:NYSEARCA:VT", "ticker": "VT", "symbol": "VT", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "vanguard-us", "maxDataAgeDays": 45, "enabled": true },
     { "id": "US:NASDAQ:VXUS", "ticker": "VXUS", "symbol": "VXUS", "country": "US", "exchange": "NASDAQ", "currency": "USD", "issuer": "vanguard-us", "maxDataAgeDays": 45, "enabled": true },
@@ -56,6 +58,8 @@
     { "id": "US:NYSEARCA:IWM", "ticker": "IWM", "symbol": "IWM", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239710", "productSlug": "ishares-russell-2000-etf", "fileName": "IWM_holdings", "enabled": true },
     { "id": "US:NASDAQ:BND", "ticker": "BND", "symbol": "BND", "country": "US", "exchange": "NASDAQ", "currency": "USD", "issuer": "vanguard-us", "maxDataAgeDays": 45, "enabled": true },
     { "id": "US:NYSEARCA:AGG", "ticker": "AGG", "symbol": "AGG", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "239458", "productSlug": "ishares-core-total-us-bond-market-etf", "fileName": "AGG_holdings", "enabled": true },
-    { "id": "US:NYSEARCA:SGOV", "ticker": "SGOV", "symbol": "SGOV", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "314116", "productSlug": "ishares-0-3-month-treasury-bond-etf", "fileName": "SGOV_holdings", "enabled": true }
+    { "id": "US:NYSEARCA:SGOV", "ticker": "SGOV", "symbol": "SGOV", "country": "US", "exchange": "NYSE Arca", "currency": "USD", "issuer": "blackrock-us", "productId": "314116", "productSlug": "ishares-0-3-month-treasury-bond-etf", "fileName": "SGOV_holdings", "enabled": true },
+    { "id": "US:CBOEBZX:GOVT", "ticker": "GOVT", "symbol": "GOVT", "name": "iShares U.S. Treasury Bond ETF", "country": "US", "exchange": "Cboe BZX", "currency": "USD", "issuer": "blackrock-us", "productId": "239468", "productSlug": "ishares-us-treasury-bond-etf", "fileName": "GOVT_holdings", "enabled": true },
+    { "id": "US:NASDAQ:USIG", "ticker": "USIG", "symbol": "USIG", "name": "iShares Broad USD Investment Grade Corporate Bond ETF", "country": "US", "exchange": "NASDAQ", "currency": "USD", "issuer": "blackrock-us", "productId": "239460", "productSlug": "ishares-broad-usd-investment-grade-corporate-bond-etf", "fileName": "USIG_holdings", "enabled": true }
   ]
 }
