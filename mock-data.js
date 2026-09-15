@@ -2,71 +2,95 @@
 // Percentages are weights within each ETF, not live market data.
 const comboDefinitions = [
   {
-    id: 'core',
-    preset: 'core',
-    tickers: ['VOO', 'XEQT'],
-    weights: [60, 40],
+    id: 'canada-us-tilt',
+    preset: 'canada-us-tilt',
+    tickers: ['XEQT', 'VFV'],
+    weights: [70, 30],
+    tags: ['canada', 'growth'],
+    featured: true,
     icon: '🇺🇸🇨🇦',
-    badge: 'Most popular',
-    title: 'Core',
-    pair: 'VOO + XEQT',
-    allocation: '60 / 40',
-    note: 'Apple shows up through both ETFs.',
+    badge: 'U.S. tilt',
+    title: 'Global core + U.S.',
+    pair: 'XEQT.TO + VFV.TO',
+    allocation: '70 / 30',
+    note: 'See how much U.S. exposure VFV adds to XEQT.',
     background: 'linear-gradient(135deg, #2563eb, #3b82f6)'
   },
   {
-    id: 'growth',
-    preset: 'growth',
-    tickers: ['VOO', 'QQQ'],
-    weights: [70, 30],
+    id: 'canada-tech-tilt',
+    preset: 'canada-tech-tilt',
+    tickers: ['XEQT', 'XQQ'],
+    weights: [80, 20],
+    tags: ['canada', 'growth'],
+    featured: true,
     icon: '⚡',
-    badge: 'Spicy',
-    title: 'Growth',
-    pair: 'VOO + QQQ',
-    allocation: '70 / 30',
-    note: 'Technology becomes nearly half.',
+    badge: 'Tech tilt',
+    title: 'Global core + Nasdaq',
+    pair: 'XEQT.TO + XQQ.TO',
+    allocation: '80 / 20',
+    note: 'Measure the extra mega-cap technology concentration.',
     background: 'linear-gradient(150deg, #0b1220 0%, #111c2e 45%, #1e3a8a 100%)'
-  },
-  {
-    id: 'world',
-    preset: 'world',
-    tickers: ['VTI', 'VXUS'],
-    weights: [70, 30],
-    icon: '🌎',
-    badge: 'Balanced world',
-    title: 'Global',
-    pair: 'VTI + VXUS',
-    allocation: '70 / 30',
-    note: 'Less U.S. exposure, still big tech.',
-    background: 'linear-gradient(135deg, #16a34a, #22c55e)'
   },
   {
     id: 'canada-income',
     preset: 'canada-income',
-    tickers: ['VDY', 'XEQT'],
-    weights: [20, 80],
+    tickers: ['XEQT', 'VDY'],
+    weights: [80, 20],
+    tags: ['canada', 'income'],
+    featured: true,
     title: 'Canada income',
-    pair: 'VDY.TO + XEQT.TO',
-    allocation: '20 / 80',
+    pair: 'XEQT.TO + VDY.TO',
+    allocation: '80 / 20',
     icon: '🍁',
-    badge: 'Income + core',
-    note: 'Dividend tilt with global diversification.',
+    badge: 'Dividend tilt',
+    note: 'Reveal repeated Canadian banks and energy holdings.',
     background: 'linear-gradient(135deg, #7c3aed, #16a34a)'
   },
   {
-    id: 'three-way',
-    title: 'Three-way blend',
-    pair: 'VDY.TO + XEQT.TO + VOO',
-    allocation: '10 / 45 / 45',
-    icon: '🍁🇺🇸',
-    badge: 'Experimental',
-    note: 'Preview only until the builder supports three funds.',
-    action: 'preview-three-way',
-    background: 'linear-gradient(135deg, #0f172a, #1d4ed8 55%, #16a34a)'
+    id: 'canada-diy-global', preset: 'canada-diy-global', tickers: ['VCN', 'XAW'], weights: [25, 75],
+    tags: ['canada', 'global'], icon: '🍁🌎', badge: 'DIY global', title: 'Canada + world',
+    pair: 'VCN.TO + XAW.TO', allocation: '25 / 75', note: 'Separate Canadian exposure from the rest of the world.',
+    background: 'linear-gradient(135deg, #0f766e, #2563eb)'
+  },
+  {
+    id: 'global-two-fund', preset: 'global-two-fund', tickers: ['VTI', 'VXUS'], weights: [70, 30],
+    tags: ['us', 'global'], icon: '🌎', badge: 'Two-fund', title: 'U.S. + international',
+    pair: 'VTI + VXUS', allocation: '70 / 30', note: 'Broad U.S. and international market coverage.',
+    background: 'linear-gradient(135deg, #16a34a, #22c55e)'
+  },
+  {
+    id: 'classic-three-fund', preset: 'classic-three-fund', tickers: ['VTI', 'VXUS', 'BND'], weights: [60, 20, 20],
+    tags: ['us', 'global'], icon: '🌎', badge: 'Three-fund', title: 'Classic three-fund',
+    pair: 'VTI + VXUS + BND', allocation: '60 / 20 / 20', note: 'U.S. stocks, international stocks, and U.S. bonds.',
+    background: 'linear-gradient(135deg, #166534, #334155)'
+  },
+  {
+    id: 'global-with-bonds', preset: 'global-with-bonds', tickers: ['VT', 'BND'], weights: [80, 20],
+    tags: ['us', 'global'], icon: '🌐', badge: 'Simple balanced', title: 'Global + bonds',
+    pair: 'VT + BND', allocation: '80 / 20', note: 'One global stock fund paired with broad U.S. bonds.',
+    background: 'linear-gradient(135deg, #0369a1, #475569)'
+  },
+  {
+    id: 'us-growth-tilt', preset: 'us-growth-tilt', tickers: ['VOO', 'QQQM'], weights: [70, 30],
+    tags: ['us', 'growth'], icon: '⚡', badge: 'Growth tilt', title: 'S&P 500 + Nasdaq',
+    pair: 'VOO + QQQM', allocation: '70 / 30', note: 'Expose the repeated mega-cap technology positions.',
+    background: 'linear-gradient(135deg, #1e3a8a, #4338ca)'
+  },
+  {
+    id: 'reddit-three-fund', preset: 'reddit-three-fund', tickers: ['VOO', 'QQQM', 'SCHD'], weights: [60, 20, 20],
+    tags: ['us', 'growth', 'income'], icon: '💬', badge: 'Community trio', title: 'Growth + dividends',
+    pair: 'VOO + QQQM + SCHD', allocation: '60 / 20 / 20', note: 'Check whether three popular funds add variety or duplication.',
+    background: 'linear-gradient(135deg, #312e81, #9f1239)'
+  },
+  {
+    id: 'covered-call-income', preset: 'covered-call-income', tickers: ['JEPI', 'JEPQ'], weights: [50, 50],
+    tags: ['us', 'income'], icon: '💵', badge: 'Income pair', title: 'Covered-call income',
+    pair: 'JEPI + JEPQ', allocation: '50 / 50', note: 'Compare their income focus and shared U.S. companies.',
+    background: 'linear-gradient(135deg, #065f46, #0f766e)'
   }
 ];
 
-const popularCombos = comboDefinitions.map(({ tickers, weights, ...combo }) => combo);
+const popularCombos = comboDefinitions.filter(combo => combo.featured).map(({ tickers, weights, tags, featured, ...combo }) => combo);
 const presets = Object.fromEntries(comboDefinitions.filter(combo => combo.preset && combo.tickers && combo.weights).map(combo => [combo.preset, { tickers: combo.tickers, weights: combo.weights }]));
 const homeOverlapPairs = [
   { pair: ['SPY', 'QQQ'], note: 'Two mega-cap funds, one huge shared top holding.' },
