@@ -9,9 +9,9 @@
   "currency": "USD",
   "issuer": "schwab",
   "holdingsDate": "2026-09-14",
-  "retrievedAt": "2026-09-15T15:04:23.233Z",
+  "retrievedAt": "2026-09-15T21:37:23.803Z",
   "sourceUrl": "https://www.schwabassetmanagement.com/allholdings/SCHD",
-  "sourceChecksum": "61d9390f0d4ed2dafe01819219d32cd8f602d0f155c6a9334369609be0b22950",
+  "sourceChecksum": "4e66fa5a3fcd86405ec3e8c151617d92fc2d07aea31f8b8014d9f33e88a34eba",
   "weightMethod": "issuer-reported",
   "reportedCoverage": 100.02,
   "coverageWeight": 100.02,
@@ -1516,6 +1516,36 @@
       "cusip": "691497309",
       "sedol": null,
       "id": "CUSIP:691497309"
+    },
+    {
+      "type": "stock",
+      "ticker": "FAU6",
+      "name": "S&P MID 400 EMINI SEP 26",
+      "weight": 0,
+      "marketValue": null,
+      "exchange": null,
+      "marketCurrency": "USD",
+      "country": "US",
+      "sector": null,
+      "isin": null,
+      "cusip": "ADI393HY9",
+      "sedol": null,
+      "id": "CUSIP:ADI393HY9"
+    },
+    {
+      "type": "stock",
+      "ticker": "DMU6",
+      "name": "DJIA MINI e-CBOT SEP 26",
+      "weight": 0,
+      "marketValue": null,
+      "exchange": null,
+      "marketCurrency": "USD",
+      "country": "US",
+      "sector": null,
+      "isin": null,
+      "cusip": "ADI390PK6",
+      "sedol": null,
+      "id": "CUSIP:ADI390PK6"
     }
   ]
 }

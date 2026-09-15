@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "24ca335cf23a",
-  "generatedAt": "2026-09-15T15:04:28.283Z",
+  "version": "557602f223d4",
+  "generatedAt": "2026-09-15T21:37:26.492Z",
   "fixtureMode": false,
   "funds": [
     {
@@ -2291,6 +2291,59 @@
       "warnings": []
     },
     {
+      "symbol": "XBAL.TO",
+      "ticker": "XBAL",
+      "name": "iShares Core Balanced ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "quality": "complete",
+      "coverageWeight": 100,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
+      "errors": [],
+      "warnings": [
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD",
+        "Duplicate security identity LISTING::USD"
+      ]
+    },
+    {
+      "symbol": "VBAL.TO",
+      "ticker": "VBAL",
+      "name": "Vanguard Balanced ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "quality": "complete",
+      "coverageWeight": 99.97707,
+      "publishable": true,
+      "holdingsDate": "2026-08-31",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "symbol": "VCN.TO",
       "ticker": "VCN",
       "name": "Vanguard FTSE Canada All Cap Index ETF",
@@ -2302,6 +2355,21 @@
       "coverageWeight": 99.25622,
       "publishable": true,
       "holdingsDate": "2026-08-31",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "symbol": "XUU.TO",
+      "ticker": "XUU",
+      "name": "iShares Core S&P U.S. Total Market Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "quality": "complete",
+      "coverageWeight": 100.02,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": []
     },
@@ -2336,6 +2404,21 @@
       "warnings": []
     },
     {
+      "symbol": "XUS.TO",
+      "ticker": "XUS",
+      "name": "iShares Core S&P 500 Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "quality": "complete",
+      "coverageWeight": 100,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "symbol": "VIU.TO",
       "ticker": "VIU",
       "name": "Vanguard FTSE Developed All Cap ex North America Index ETF",
@@ -2362,6 +2445,21 @@
       "coverageWeight": 99.9802,
       "publishable": true,
       "holdingsDate": "2026-08-31",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "symbol": "XAW.TO",
+      "ticker": "XAW",
+      "name": "iShares Core MSCI All Country World ex Canada Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "quality": "complete",
+      "coverageWeight": 100,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": []
     },
@@ -2441,6 +2539,21 @@
       "warnings": []
     },
     {
+      "symbol": "SPY",
+      "ticker": "SPY",
+      "name": "State Street SPDR S&P 500 ETF Trust",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "state-street",
+      "quality": "complete",
+      "coverageWeight": 99.951255,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
+      "errors": [],
+      "warnings": []
+    },
+    {
       "symbol": "IVV",
       "ticker": "IVV",
       "name": "IVV",
@@ -2449,9 +2562,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 100.02,
+      "coverageWeight": 99.97,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": []
     },
@@ -2473,6 +2586,24 @@
       ]
     },
     {
+      "symbol": "SCHB",
+      "ticker": "SCHB",
+      "name": "Schwab U.S. Broad Market ETF",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "schwab",
+      "quality": "complete",
+      "coverageWeight": 98.6,
+      "publishable": true,
+      "holdingsDate": "2026-09-09",
+      "errors": [],
+      "warnings": [
+        "Duplicate security identity CUSIP:91913Y100",
+        "Duplicate security identity CUSIP:219350105"
+      ]
+    },
+    {
       "symbol": "QQQ",
       "ticker": "QQQ",
       "name": "Invesco QQQ Trust",
@@ -2481,12 +2612,12 @@
       "currency": "USD",
       "issuer": "invesco",
       "quality": "complete",
-      "coverageWeight": 100.000001,
+      "coverageWeight": 99.999997,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": [
-        "Duplicate security identity CUSIP:NQU6"
+        "Duplicate security identity CUSIP:NQZ6"
       ]
     },
     {
@@ -2498,12 +2629,12 @@
       "currency": "USD",
       "issuer": "invesco",
       "quality": "complete",
-      "coverageWeight": 100.000002,
+      "coverageWeight": 99.999997,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": [
-        "Duplicate security identity CUSIP:NQU6"
+        "Duplicate security identity CUSIP:NQZ6"
       ]
     },
     {
@@ -4279,9 +4410,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 98.79,
+      "coverageWeight": 98.82,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": [
         "Duplicate security identity LISTING:NATIONALSTOCKEXCHANGEOFINDIA:-",
@@ -4291,22 +4422,23 @@
         "Duplicate security identity LISTING:HONGKONGEXCHANGESANDCLEARINGLTD:-",
         "Duplicate security identity LISTING:HONGKONGEXCHANGESANDCLEARINGLTD:2268",
         "Duplicate security identity LISTING::INR",
-        "Duplicate security identity LISTING::AED",
         "Duplicate security identity LISTING::SAR",
+        "Duplicate security identity LISTING::USD",
         "Duplicate security identity LISTING::INR",
+        "Duplicate security identity LISTING::AED",
         "Duplicate security identity LISTING::USD",
         "Duplicate security identity LISTING::AED",
         "Duplicate security identity LISTING::SAR",
+        "Duplicate security identity LISTING::AED",
+        "Duplicate security identity LISTING::AED",
+        "Duplicate security identity LISTING::AED",
+        "Duplicate security identity LISTING::AED",
         "Duplicate security identity LISTING::SAR",
         "Duplicate security identity LISTING::SAR",
         "Duplicate security identity LISTING::SAR",
-        "Duplicate security identity LISTING::AED",
-        "Duplicate security identity LISTING::SAR",
-        "Duplicate security identity LISTING::AED",
-        "Duplicate security identity LISTING::AED",
-        "Duplicate security identity LISTING::AED",
-        "Duplicate security identity LISTING::AED",
+        "Duplicate security identity LISTING::COP",
         "Duplicate security identity LISTING::INR",
+        "Duplicate security identity LISTING::IDR",
         "Duplicate security identity LISTING::INR",
         "Duplicate security identity LISTING::COP",
         "Duplicate security identity LISTING::AED",
@@ -4369,6 +4501,36 @@
       "quality": "complete",
       "coverageWeight": 99.99,
       "publishable": true,
+      "holdingsDate": "2026-09-11",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "symbol": "JEPI",
+      "ticker": "JEPI",
+      "name": "JPMorgan Equity Premium Income ETF",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "jpmorgan",
+      "quality": "complete",
+      "coverageWeight": 99.77,
+      "publishable": true,
+      "holdingsDate": "2026-09-14",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "symbol": "JEPQ",
+      "ticker": "JEPQ",
+      "name": "JPMorgan Nasdaq Equity Premium Income ETF",
+      "country": "US",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "issuer": "jpmorgan",
+      "quality": "complete",
+      "coverageWeight": 99.49,
+      "publishable": true,
       "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": []
@@ -4412,9 +4574,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 99.81,
+      "coverageWeight": 99.89,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": [
         "Duplicate security identity LISTING:NOMARKETEGUNLISTED:ADRO",

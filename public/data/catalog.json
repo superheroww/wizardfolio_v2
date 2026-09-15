@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "24ca335cf23a",
-  "generatedAt": "2026-09-15T15:04:28.283Z",
+  "version": "557602f223d4",
+  "generatedAt": "2026-09-15T21:37:26.492Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -160,6 +160,30 @@
       "coverageWeight": 99.97816
     },
     {
+      "symbol": "XBAL.TO",
+      "ticker": "XBAL",
+      "name": "iShares Core Balanced ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 100
+    },
+    {
+      "symbol": "VBAL.TO",
+      "ticker": "VBAL",
+      "name": "Vanguard Balanced ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.97707
+    },
+    {
       "symbol": "VCN.TO",
       "ticker": "VCN",
       "name": "Vanguard FTSE Canada All Cap Index ETF",
@@ -170,6 +194,18 @@
       "holdingsDate": "2026-08-31",
       "quality": "complete",
       "coverageWeight": 99.25622
+    },
+    {
+      "symbol": "XUU.TO",
+      "ticker": "XUU",
+      "name": "iShares Core S&P U.S. Total Market Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 100.02
     },
     {
       "symbol": "VUN.TO",
@@ -196,6 +232,18 @@
       "coverageWeight": 99.98246
     },
     {
+      "symbol": "XUS.TO",
+      "ticker": "XUS",
+      "name": "iShares Core S&P 500 Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 100
+    },
+    {
       "symbol": "VIU.TO",
       "ticker": "VIU",
       "name": "Vanguard FTSE Developed All Cap ex North America Index ETF",
@@ -218,6 +266,18 @@
       "holdingsDate": "2026-08-31",
       "quality": "complete",
       "coverageWeight": 99.9802
+    },
+    {
+      "symbol": "XAW.TO",
+      "ticker": "XAW",
+      "name": "iShares Core MSCI All Country World ex Canada Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "blackrock-ca",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 100
     },
     {
       "symbol": "VDY.TO",
@@ -280,6 +340,18 @@
       "coverageWeight": 100.13
     },
     {
+      "symbol": "SPY",
+      "ticker": "SPY",
+      "name": "State Street SPDR S&P 500 ETF Trust",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "state-street",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 99.951255
+    },
+    {
       "symbol": "IVV",
       "ticker": "IVV",
       "name": "IVV",
@@ -287,9 +359,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 100.02
+      "coverageWeight": 99.97
     },
     {
       "symbol": "VTI",
@@ -304,6 +376,18 @@
       "coverageWeight": 98.39
     },
     {
+      "symbol": "SCHB",
+      "ticker": "SCHB",
+      "name": "Schwab U.S. Broad Market ETF",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "schwab",
+      "holdingsDate": "2026-09-09",
+      "quality": "complete",
+      "coverageWeight": 98.6
+    },
+    {
       "symbol": "QQQ",
       "ticker": "QQQ",
       "name": "Invesco QQQ Trust",
@@ -311,9 +395,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 100.000001
+      "coverageWeight": 99.999997
     },
     {
       "symbol": "QQQM",
@@ -323,9 +407,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 100.000002
+      "coverageWeight": 99.999997
     },
     {
       "symbol": "VT",
@@ -395,9 +479,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.79
+      "coverageWeight": 98.82
     },
     {
       "symbol": "SCHD",
@@ -443,9 +527,33 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-11",
       "quality": "complete",
       "coverageWeight": 99.99
+    },
+    {
+      "symbol": "JEPI",
+      "ticker": "JEPI",
+      "name": "JPMorgan Equity Premium Income ETF",
+      "country": "US",
+      "exchange": "NYSE Arca",
+      "currency": "USD",
+      "issuer": "jpmorgan",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 99.77
+    },
+    {
+      "symbol": "JEPQ",
+      "ticker": "JEPQ",
+      "name": "JPMorgan Nasdaq Equity Premium Income ETF",
+      "country": "US",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "issuer": "jpmorgan",
+      "holdingsDate": "2026-09-14",
+      "quality": "complete",
+      "coverageWeight": 99.49
     },
     {
       "symbol": "VB",
@@ -479,9 +587,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 99.81
+      "coverageWeight": 99.89
     },
     {
       "symbol": "BND",
