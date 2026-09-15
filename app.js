@@ -197,14 +197,6 @@ document.addEventListener('click', async event => {
     });
     return;
   }
-  if (presetButton.dataset.action === 'preview-three-way') {
-    state.tickers = ['VDY', 'XEQT', 'VOO'];
-    state.weights = [10, 45, 45];
-    renderPortfolio();
-    showScreen('portfolio');
-    await refreshPublishedFunds(state.tickers);
-    return;
-  }
   const preset = presetData[presetButton.dataset.preset];
   if (!preset) return;
   state.tickers = [...preset.tickers];
@@ -805,13 +797,7 @@ function renderExploreCard(combo) {
 }
 
 function exploreTagsForCombo(combo) {
-  const tags = new Set(['all']);
-  const haystack = `${combo.id || ''} ${combo.preset || ''} ${combo.title || ''} ${combo.pair || ''} ${combo.badge || ''} ${combo.note || ''}`.toLowerCase();
-  if (haystack.includes('trend') || haystack.includes('core') || haystack.includes('growth')) tags.add('trending');
-  if (haystack.includes('global') || haystack.includes('world') || combo.preset === 'world') tags.add('global');
-  if (haystack.includes('canada') || haystack.includes('🍁')) tags.add('canada');
-  if (haystack.includes('growth') || haystack.includes('spicy')) tags.add('growth');
-  return [...tags];
+  return ['all', ...new Set(combo.tags || [])];
 }
 
 function asMap(entries) {
