@@ -1597,13 +1597,11 @@ function exposureInsightMarkup(snapshot, uniqueEstimate) {
   const insight = buildStandoutInsight(snapshot, state.portfolioValue);
 
   if (!snapshot.holdings.length || !insight) {
-    return `<p class="insight-kicker">What stands out</p>
-      <h3 class="insight-headline">ETF mix analyzed</h3>
+    return `<h3 class="insight-headline">ETF mix analyzed</h3>
       <div class="insight-metric"><strong>${state.tickers.length}</strong><span>selected ETF${state.tickers.length === 1 ? '' : 's'}</span></div>`;
   }
 
-  return `<p class="insight-kicker">What stands out</p>
-    <h3 class="insight-headline">${insight.headline}</h3>
+  return `<h3 class="insight-headline">${insight.headline}</h3>
     <div class="insight-metric">
       <strong>${insight.primaryMetric.value}</strong>
       <span>${insight.primaryMetric.label}</span>
@@ -1836,7 +1834,7 @@ function renderPortfolio() {
     const missingMessage = missingSources.length
       ? `<p class="data-note">Underlying constituent data is not available for ${missingSources.join(', ')} yet. The issuer-reported security count is shown, but stock exposures are not estimated.</p>`
       : '';
-    root.querySelector('.biggest-bets').innerHTML = `<p class="eyebrow">Top holdings</p><h2>The companies you own most</h2><p>Your combined exposure across all ETFs.</p>` +
+    root.querySelector('.biggest-bets').innerHTML = `<h2>The companies you own most</h2><p>Your combined exposure across all ETFs.</p>` +
       (top.length
           ? top.map((holding, index) => {
             return `<article class="holding-card${index === 0 ? ' featured' : ''}">${logoMarkup(holdingLogoTicker(holding), holding.name, 64)}<div><b>${holding.name}</b><span class="ticker">${holding.symbol}</span></div><strong>${holding.weight.toFixed(1)}<sup>%</sup></strong></article>`;
@@ -1849,7 +1847,7 @@ function renderPortfolio() {
       if (overlapPair?.sharedCount) {
         const [tickerA, tickerB] = state.tickers;
         const qualifier = overlapPair.metricsComplete ? '' : 'At least ';
-        overlapSection.innerHTML = `<p class="eyebrow">Overlap</p><h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-dashboard"><div class="overlap-stats"><span><strong>${qualifier}${formatPercent(overlapPair.totalOverlap)}</strong><small>Overlap<br />by weight</small></span><span><strong>${qualifier}${formatInteger(overlapPair.sharedCount)}</strong><small>Overlapping<br />holdings</small></span></div><div class="overlap-funds"><article><div><b>${tickerA}</b><span>${formatInteger(overlapPair.holdingsCountA)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsA)}</strong><small>also in ${tickerB}</small></article><article><div><b>${tickerB}</b><span>${formatInteger(overlapPair.holdingsCountB)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsB)}</strong><small>also in ${tickerA}</small></article></div>${overlapPair.metricsComplete ? '' : '<p class="overlap-caveat">Based on the constituent data currently available.</p>'}</div>`;
+        overlapSection.innerHTML = `<h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-dashboard"><div class="overlap-stats"><span><strong>${qualifier}${formatPercent(overlapPair.totalOverlap)}</strong><small>Overlap<br />by weight</small></span><span><strong>${qualifier}${formatInteger(overlapPair.sharedCount)}</strong><small>Overlapping<br />holdings</small></span></div><div class="overlap-funds"><article><div><b>${tickerA}</b><span>${formatInteger(overlapPair.holdingsCountA)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsA)}</strong><small>also in ${tickerB}</small></article><article><div><b>${tickerB}</b><span>${formatInteger(overlapPair.holdingsCountB)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsB)}</strong><small>also in ${tickerA}</small></article></div>${overlapPair.metricsComplete ? '' : '<p class="overlap-caveat">Based on the constituent data currently available.</p>'}</div>`;
       }
     }
 
@@ -1865,7 +1863,7 @@ function renderPortfolio() {
 
     const geoSection = root.querySelector('.geo-section');
     if (geoSection) {
-      geoSection.innerHTML = `<p class="eyebrow">Geography</p><h2>Where in the world?</h2>` + geography.map(([region, weight]) => {
+      geoSection.innerHTML = `<h2>Where in the world?</h2>` + geography.map(([region, weight]) => {
         const marker = geoMarker(region);
         return `<div class="geo-row"><span>${marker.kind === 'flag' ? `<i class="geo-flag" aria-hidden="true">${marker.symbol}</i>` : `<i class="geo-symbol">${marker.symbol}</i>`}${marker.label}</span><b>${formatPercent(weight)}</b></div>`;
       }).join('') + (geography.length

@@ -20,7 +20,9 @@ h3,
 }
 
 .hero { padding: 12px 0 34px; }
-.hero .eyebrow { display: none; }
+.eyebrow,
+.portfolio-intro > p,
+.insight-kicker { display: none; }
 .hero h1 { font-size: 41.6px; font-weight: 700; letter-spacing: -1.248px; line-height: 40.768px; }
 .hero h1 em { color: var(--blue); font-style: normal; }
 .mix-values strong { font-weight: 700; }
