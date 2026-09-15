@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "CA:TSX:VBG",
+  "symbol": "VBG.TO",
+  "ticker": "VBG",
+  "name": "Vanguard Global ex-U.S. Aggregate Bond Index ETF (CAD-hedged)",
+  "country": "CA",
+  "exchange": "TSX",
+  "currency": "CAD",
+  "issuer": "vanguard-ca",
+  "holdingsDate": "2026-08-31",
+  "retrievedAt": "2026-09-15T11:36:57.406Z",
+  "sourceUrl": "https://www.vanguard.ca/gpx/graphql",
+  "sourceChecksum": "764b2d94b9530c8065c203097bfb5794b4da3b910ec789baf9a9cf49028b1f71",
+  "weightMethod": "issuer-reported",
+  "reportedCoverage": 98.87886,
+  "coverageWeight": 98.87886,
+  "quality": "complete",
+  "holdings": [
+    {
+      "type": "etf",
+      "ticker": "BNDX",
+      "name": "Vanguard Total International Bond ETF",
+      "weight": 98.87886,
+      "marketValue": 1547946268.45,
+      "sector": "Open End & Miscellaneous Investment Vehicles",
+      "country": "US",
+      "exchange": null,
+      "marketCurrency": "CAD",
+      "isin": null,
+      "cusip": null,
+      "sedol": "BBDJJS1",
+      "sourceId": null,
+      "id": "ETF:BNDX"
+    }
+  ]
+}

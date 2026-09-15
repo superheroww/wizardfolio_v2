@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "0c90499a9e67",
-  "generatedAt": "2026-09-15T11:21:52.457Z",
+  "version": "bab8732795e4",
+  "generatedAt": "2026-09-15T11:37:06.008Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -100,6 +100,18 @@
       "coverageWeight": 98.37
     },
     {
+      "symbol": "VEQT.TO",
+      "ticker": "VEQT",
+      "name": "Vanguard All-Equity ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.9812
+    },
+    {
       "symbol": "XGRO.TO",
       "ticker": "XGRO",
       "name": "iShares Core Growth ETF Portfolio",
@@ -134,6 +146,126 @@
       "holdingsDate": "2026-09-14",
       "quality": "complete",
       "coverageWeight": 100.01
+    },
+    {
+      "symbol": "VGRO.TO",
+      "ticker": "VGRO",
+      "name": "Vanguard Growth ETF Portfolio",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.97816
+    },
+    {
+      "symbol": "VCN.TO",
+      "ticker": "VCN",
+      "name": "Vanguard FTSE Canada All Cap Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.25622
+    },
+    {
+      "symbol": "VUN.TO",
+      "ticker": "VUN",
+      "name": "Vanguard Morningstar U.S. Total Market Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.97333
+    },
+    {
+      "symbol": "VFV.TO",
+      "ticker": "VFV",
+      "name": "Vanguard S&P 500 Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.98246
+    },
+    {
+      "symbol": "VIU.TO",
+      "ticker": "VIU",
+      "name": "Vanguard FTSE Developed All Cap ex North America Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.02679
+    },
+    {
+      "symbol": "VEE.TO",
+      "ticker": "VEE",
+      "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.9802
+    },
+    {
+      "symbol": "VDY.TO",
+      "ticker": "VDY",
+      "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.70788
+    },
+    {
+      "symbol": "VAB.TO",
+      "ticker": "VAB",
+      "name": "Vanguard Canadian Aggregate Bond Index ETF",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 99.6702
+    },
+    {
+      "symbol": "VBG.TO",
+      "ticker": "VBG",
+      "name": "Vanguard Global ex-U.S. Aggregate Bond Index ETF (CAD-hedged)",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 98.87886
+    },
+    {
+      "symbol": "VBU.TO",
+      "ticker": "VBU",
+      "name": "Vanguard U.S. Aggregate Bond Index ETF (CAD-hedged)",
+      "country": "CA",
+      "exchange": "TSX",
+      "currency": "CAD",
+      "issuer": "vanguard-ca",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 98.8807
     },
     {
       "symbol": "VOO",
@@ -355,6 +487,18 @@
       "symbol": "BND",
       "ticker": "BND",
       "name": "BND",
+      "country": "US",
+      "exchange": "NASDAQ",
+      "currency": "USD",
+      "issuer": "vanguard-us",
+      "holdingsDate": "2026-08-31",
+      "quality": "complete",
+      "coverageWeight": 100
+    },
+    {
+      "symbol": "BNDX",
+      "ticker": "BNDX",
+      "name": "Vanguard Total International Bond ETF",
       "country": "US",
       "exchange": "NASDAQ",
       "currency": "USD",

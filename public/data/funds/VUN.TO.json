@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "CA:TSX:VUN",
+  "symbol": "VUN.TO",
+  "ticker": "VUN",
+  "name": "Vanguard Morningstar U.S. Total Market Index ETF",
+  "country": "CA",
+  "exchange": "TSX",
+  "currency": "CAD",
+  "issuer": "vanguard-ca",
+  "holdingsDate": "2026-08-31",
+  "retrievedAt": "2026-09-15T11:36:55.230Z",
+  "sourceUrl": "https://www.vanguard.ca/gpx/graphql",
+  "sourceChecksum": "051fce60734a3868750fb8068ee0e528840c59f902ec9929983e12a9b2695a20",
+  "weightMethod": "issuer-reported",
+  "reportedCoverage": 99.97333,
+  "coverageWeight": 99.97333,
+  "quality": "complete",
+  "holdings": [
+    {
+      "type": "etf",
+      "ticker": "VTI",
+      "name": "Vanguard Morningstar Total Stock Market ETF",
+      "weight": 99.97333,
+      "marketValue": 19671490047.91,
+      "sector": "Open End & Miscellaneous Investment Vehicles",
+      "country": "US",
+      "exchange": null,
+      "marketCurrency": "CAD",
+      "isin": null,
+      "cusip": null,
+      "sedol": "2762568",
+      "sourceId": null,
+      "id": "ETF:VTI"
+    }
+  ]
+}

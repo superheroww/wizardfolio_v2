@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "CA:TSX:VEE",
+  "symbol": "VEE.TO",
+  "ticker": "VEE",
+  "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+  "country": "CA",
+  "exchange": "TSX",
+  "currency": "CAD",
+  "issuer": "vanguard-ca",
+  "holdingsDate": "2026-08-31",
+  "retrievedAt": "2026-09-15T11:36:56.596Z",
+  "sourceUrl": "https://www.vanguard.ca/gpx/graphql",
+  "sourceChecksum": "24b588e7b75b4019dfd7c246a4bb5db28f11447912a9d0b2b3e7526722e7be46",
+  "weightMethod": "issuer-reported",
+  "reportedCoverage": 99.9802,
+  "coverageWeight": 99.9802,
+  "quality": "complete",
+  "holdings": [
+    {
+      "type": "etf",
+      "ticker": "VWO",
+      "name": "Vanguard FTSE Emerging Markets ETF",
+      "weight": 99.9802,
+      "marketValue": 4610993623.38,
+      "sector": "Open End & Miscellaneous Investment Vehicles",
+      "country": "US",
+      "exchange": null,
+      "marketCurrency": "CAD",
+      "isin": null,
+      "cusip": null,
+      "sedol": "B06HMH5",
+      "sourceId": null,
+      "id": "ETF:VWO"
+    }
+  ]
+}

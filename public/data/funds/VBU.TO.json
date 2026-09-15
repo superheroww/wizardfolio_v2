@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "CA:TSX:VBU",
+  "symbol": "VBU.TO",
+  "ticker": "VBU",
+  "name": "Vanguard U.S. Aggregate Bond Index ETF (CAD-hedged)",
+  "country": "CA",
+  "exchange": "TSX",
+  "currency": "CAD",
+  "issuer": "vanguard-ca",
+  "holdingsDate": "2026-08-31",
+  "retrievedAt": "2026-09-15T11:36:57.670Z",
+  "sourceUrl": "https://www.vanguard.ca/gpx/graphql",
+  "sourceChecksum": "c99d8061a5d2ca159e9b5dddd504a26259a636c784a5dcee98f03064fa0a2e2e",
+  "weightMethod": "issuer-reported",
+  "reportedCoverage": 98.8807,
+  "coverageWeight": 98.8807,
+  "quality": "complete",
+  "holdings": [
+    {
+      "type": "etf",
+      "ticker": "BND",
+      "name": "Vanguard Total Bond Market ETF",
+      "weight": 98.8807,
+      "marketValue": 1892713343.02,
+      "sector": "Open End & Miscellaneous Investment Vehicles",
+      "country": "US",
+      "exchange": null,
+      "marketCurrency": "CAD",
+      "isin": null,
+      "cusip": null,
+      "sedol": "B1VZBS5",
+      "sourceId": null,
+      "id": "ETF:BND"
+    }
+  ]
+}
