@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 21135)
+Total output lines: 2099
+
 const { etfs, presets: presetData } = window.WIZARD_FOLIO_DATA;
 const publishedData = window.WizardFolioDataClient.createClient({ store: etfs });
 const screens = document.querySelectorAll('.screen');
@@ -259,6 +262,7 @@ function hasConstituentData(ticker) {
 }
 
 function securityKey(security, fallbackExchange = '') {
+  if (security.id) return security.id;
   if (security.isin) return `ISIN:${normalizeIdentifier(security.isin)}`;
   if (security.cusip) return `CUSIP:${normalizeIdentifier(security.cusip)}`;
   const ticker = normalizeIdentifier(security.ticker);
@@ -1016,105 +1020,7 @@ function renderCompareCard(snapshot, slot) {
         <span><b>${Math.round(totalWeight(snapshot.weights))}%</b> total</span>
       </div>
       <div class="compare-highlights">
-        <span><em>Top holding</em><strong>${topHolding ? `${topHolding.icon} ${topHolding.name}` : '—'}</strong>${topHolding ? `${formatPercent(topHolding.weight)} via ${topHolding.sources.map(source => source.ticker).join(', ')}` : 'No data'}</span>
-        <span><em>Top sector</em><strong>${topSector ? topSector[0] : '—'}</strong>${topSector ? formatPercent(topSector[1]) : 'No data'}</span>
-        <span><em>Top region</em><strong>${topGeo ? topGeo[0] : '—'}</strong>${topGeo ? formatPercent(topGeo[1]) : 'No data'}</span>
-      </div>
-    </article>
-  `;
-}
-
-function renderComparePanel() {
-  if (!comparePanel) return;
-  comparePanel.hidden = !comparePanelOpen;
-  if (!comparePanelOpen) {
-    comparePanel.innerHTML = '';
-    return;
-  }
-  const comparison = getComparisonSummary(compareState.a, compareState.b);
-  comparePanel.innerHTML = `
-    <div class="compare-shell">
-      <div class="compare-head" id="compare-title">
-        <div>
-          <p>What if...?</p>
-          <span>Drag an allocation. Everything underneath moves instantly. Save one version, tweak the sliders, then compare both side by side.</span>
-        </div>
-        <small>${compareState.a && compareState.b ? 'Two versions ready' : 'Save two versions'}</small>
-      </div>
-      <div class="compare-actions">
-        <button type="button" class="compare-save" data-compare-save="a">Save this as A</button>
-        <button type="button" class="compare-save" data-compare-save="b">Save this as B</button>
-        <button type="button" class="compare-save compare-swap" data-compare-swap${compareState.a && compareState.b ? '' : ' disabled'}>Swap A and B</button>
-      </div>
-      <div class="compare-grid">
-        ${renderCompareCard(compareState.a, 'A')}
-        ${renderCompareCard(compareState.b, 'B')}
-      </div>
-      ${comparison ? `
-        <section class="compare-story">
-          <article class="compare-story-card">
-            <p>Quick read</p>
-            <h4>${comparison.title}</h4>
-            <span>${comparison.body}</span>
-          </article>
-          <div class="compare-story-pills">
-            ${comparison.badges.map(badge => `
-              <div class="compare-pill">
-                <em>${badge.label}</em>
-                <b>${badge.value}</b>
-                <span>${badge.side} · ${badge.detail}</span>
-              </div>
-            `).join('')}
-          </div>
-        </section>
-        <div class="compare-detail-grid">
-          <article class="compare-detail-card">
-            <div class="compare-detail-head">
-              <div>
-                <p>Sectors</p>
-                <span>Where the money leans inside each mix.</span>
-              </div>
-              <small>Mix A vs Mix B</small>
-            </div>
-            ${renderAllocationComparisonTable(compareState.a.sectors, compareState.b.sectors, compareState.a, compareState.b, 'sector', 5)}
-          </article>
-          <article class="compare-detail-card">
-            <div class="compare-detail-head">
-              <div>
-                <p>Countries</p>
-                <span>Geography exposure, line by line.</span>
-              </div>
-              <small>Mix A vs Mix B</small>
-            </div>
-            ${renderAllocationComparisonTable(compareState.a.geography, compareState.b.geography, compareState.a, compareState.b, 'geo', 5)}
-          </article>
-          <article class="compare-detail-card compare-detail-card-wide">
-            <div class="compare-detail-head">
-              <div>
-                <p>Top 10 holdings</p>
-                <span>Each holding appears once, with both mix weights and the difference.</span>
-              </div>
-              <small>Top 10 combined</small>
-            </div>
-            ${renderHoldingsComparisonTable(compareState.a, compareState.b, 10)}
-          </article>
-        </div>
-      ` : ''}
-    </div>
-  `;
-}
-
-function updateHomeInsights() {
-  const apple = blendHoldings().find(holding => holding.symbol === 'AAPL');
-  document.querySelector('#homeAppleWeight').textContent = apple ? formatPercent(apple.weight) : '0%';
-  document.querySelector('#homeAppleSources').textContent = apple ? `through ${apple.sources.length} ETF${apple.sources.length === 1 ? '' : 's'}` : 'not in sampled holdings';
-  const geography = Object.fromEntries(summarizePortfolioGeography(state.tickers, state.weights));
-  document.querySelector('#homeUsWeight').textContent = formatPercent(geography['United States'] || 0);
-}
-
-function renderPopularCombos() {
-  comboList.innerHTML = window.WIZARD_FOLIO_DATA.popularCombos.map(combo => `
-    <button class="combo"${combo.preset ? ` data-preset="${combo.preset}"` : ''}${combo.action ? ` data-action="${combo.action}"` : ''} style="background: ${combo.background};">
+        <span><em>Top holding</em><strong>${topHolding ? `${topHolding.icon} ${topHolding.name}` : '—'}</strong>${topHolding ? `${formatPercent(topHolding.weight)} via ${t…1135 tokens truncated… ''} style="background: ${combo.background};">
       <span>${combo.icon}</span>
       <div>
         <em>${combo.badge}</em>

@@ -7,6 +7,7 @@ const blackrock = require('./adapters/blackrock');
 const invesco = require('./adapters/invesco');
 const schwab = require('./adapters/schwab');
 const vanguard = require('./adapters/vanguard');
+const vanguardCanada = require('./adapters/vanguard-canada');
 const { fixtureFund, loadCurrentFixture } = require('./lib/fixture');
 const { fetchText } = require('./lib/fetch');
 const { checksum, ensureDirectory, readJson, writeJson } = require('./lib/io');
@@ -24,6 +25,7 @@ const adapters = {
   'blackrock-us': blackrock,
   invesco,
   schwab,
+  'vanguard-ca': vanguardCanada,
   'vanguard-us': vanguard
 };
 
@@ -37,14 +39,16 @@ async function downloadFund(fund) {
   const url = adapter.sourceUrl(fund);
   let body;
   try {
-    body = await fetchText(url, { headers: { 'user-agent': 'WizardFolio data pipeline/1.0' } });
+    body = adapter.fetchPayload
+      ? await adapter.fetchPayload(fund)
+      : await fetchText(url, { headers: { 'user-agent': 'WizardFolio data pipeline/1.0' } });
   } catch (error) {
     throw new Error(`${fund.symbol}: ${error.message}`);
   }
   const directory = path.join(rawRoot, dateStamp());
   await ensureDirectory(directory);
   const extension = adapter.rawExtension || (fund.issuer.startsWith('vanguard') ? 'json' : 'csv');
-  await fs.writeFile(path.join(directory, `${fund.symbol.replace(/[^A-Z0-9.-]/gi, '_')}.${extension}`), body, 'utf8');
+  await fs.writeFile(path.join(directory, `${fund.symbol.replace(/[^A-Z0-9.-]/gi, '_')}.${extension}`), body);
   return adapter.parse(body, fund, { sourceUrl: url, retrievedAt: new Date().toISOString(), sourceChecksum: checksum(body) });
 }
 

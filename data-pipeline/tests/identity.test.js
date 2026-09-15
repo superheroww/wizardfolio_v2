@@ -22,3 +22,14 @@ test('ETF references use a distinct identity namespace', () => {
 test('bonds without tickers use their issuer identifier', () => {
   assert.equal(securityId({ type: 'bond', isin: 'US91282ABC12', name: 'Treasury Note' }), 'ISIN:US91282ABC12');
 });
+
+test('issuer source IDs identify holdings without standard identifiers', () => {
+  const first = securityId({
+    type: 'bond', name: 'Province of Ontario', sourceId: 'VANGUARD-CA|FI.CORP|ONT|2035-06-02|4.15'
+  });
+  const second = securityId({
+    type: 'bond', name: 'Province of Ontario', sourceId: 'VANGUARD-CA|FI.CORP|ONT|2036-06-02|4.15'
+  });
+  assert.equal(first, 'SOURCE:VANGUARDCAFICORPONT20350602415');
+  assert.notEqual(first, second);
+});

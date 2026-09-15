@@ -45,7 +45,7 @@ npm run data:update:fixture
 ```
 
 Run `npm run data:update` to retrieve configured issuer files from BlackRock/iShares,
-Vanguard US, Invesco, and Schwab. Raw downloads are retained
+Vanguard Canada, Vanguard US, Invesco, and Schwab. Raw downloads are retained
 under `data-pipeline/raw/<date>/`. Only funds that pass the publication rules are written
 to `public/data`; a failed or partial import is recorded in the manifest and is not
 published as complete data. Each successful run also creates `public/data/catalog.json`.
@@ -59,3 +59,6 @@ To add a fund from a supported issuer, add its identifiers to
 Issuer-specific parsing stays in `data-pipeline/adapters/`, so scheduled updates and
 local runs use the same validation and publishing path. Merging pipeline changes into
 `main` automatically runs the same update and publishes the validated catalogue.
+
+The Vanguard Canada adapter uses the issuer's paginated holdings API and a 45-day
+freshness window because Canadian holdings are published on a month-end schedule.

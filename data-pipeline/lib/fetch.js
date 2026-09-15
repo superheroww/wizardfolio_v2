@@ -10,7 +10,9 @@ async function fetchText(url, options = {}) {
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
       const response = await fetch(url, {
+        method: options.method,
         headers: options.headers,
+        body: options.body,
         signal: AbortSignal.timeout(timeoutMs)
       });
       if (response.ok) return response.text();
