@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { parse, sourceUrl } = require('../adapters/schwab');
+const { fetchPayload, lastPage, parse, sourceUrl } = require('../adapters/schwab');
 
 test('Schwab adapter parses the all-holdings HTML table', () => {
   const html = `
@@ -22,4 +22,20 @@ test('Schwab adapter parses the all-holdings HTML table', () => {
 
 test('Schwab adapter rejects pages without the holdings table', () => {
   assert.throws(() => parse('<html></html>', { symbol: 'TEST', ticker: 'TEST' }), /holdings table was not found/);
+});
+
+test('Schwab adapter downloads every holdings page', async () => {
+  const calls = [];
+  const first = '<a href="?page=2" title="Go to last page">Last</a><tr><td data-label="Fund Name">ONE</td><td data-label="% of Assets">40%</td></tr>';
+  const fetchText = async url => {
+    calls.push(url);
+    if (!url.includes('?page=')) return first;
+    const page = Number(new URL(url).searchParams.get('page'));
+    return `<tr><td data-label="Fund Name">PAGE ${page}</td><td data-label="% of Assets">30%</td></tr>`;
+  };
+  const fund = { symbol: 'SCHB', ticker: 'SCHB', country: 'US', currency: 'USD' };
+  const payload = await fetchPayload(fund, { fetchText });
+  assert.equal(lastPage(first), 2);
+  assert.deepEqual(calls, [sourceUrl(fund), `${sourceUrl(fund)}?page=1`, `${sourceUrl(fund)}?page=2`]);
+  assert.equal(parse(payload, fund).reportedCoverage, 100);
 });

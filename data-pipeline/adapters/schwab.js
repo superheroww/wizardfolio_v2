@@ -1,7 +1,28 @@
 'use strict';
 
+const { fetchText } = require('../lib/fetch');
+
 function sourceUrl(fund) {
   return `https://www.schwabassetmanagement.com/allholdings/${fund.ticker}`;
+}
+
+function lastPage(html) {
+  return Math.max(0, ...Array.from(html.matchAll(/href="\?page=(\d+)"\s+title="Go to last page"/gi), match => Number(match[1])));
+}
+
+async function fetchPayload(fund, options = {}) {
+  const download = options.fetchText || fetchText;
+  const url = sourceUrl(fund);
+  const request = page => download(page ? `${url}?page=${page}` : url, {
+    headers: { 'user-agent': 'WizardFolio data pipeline/1.0' }
+  });
+  const pages = [await request(0)];
+  const finalPage = lastPage(pages[0]);
+  for (let start = 1; start <= finalPage; start += 4) {
+    const batch = Array.from({ length: Math.min(4, finalPage - start + 1) }, (_, index) => start + index);
+    pages.push(...await Promise.all(batch.map(request)));
+  }
+  return pages.join('\n');
 }
 
 function decode(value) {
@@ -67,4 +88,4 @@ function parse(html, fund, metadata = {}) {
   };
 }
 
-module.exports = { parse, rawExtension: 'html', sourceUrl };
+module.exports = { fetchPayload, lastPage, parse, rawExtension: 'html', sourceUrl };

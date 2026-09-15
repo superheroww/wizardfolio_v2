@@ -5,7 +5,9 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const blackrock = require('./adapters/blackrock');
 const invesco = require('./adapters/invesco');
+const jpmorgan = require('./adapters/jpmorgan');
 const schwab = require('./adapters/schwab');
+const stateStreet = require('./adapters/state-street');
 const vanguard = require('./adapters/vanguard');
 const vanguardCanada = require('./adapters/vanguard-canada');
 const { fixtureFund, loadCurrentFixture } = require('./lib/fixture');
@@ -24,7 +26,9 @@ const adapters = {
   'blackrock-ca': blackrock,
   'blackrock-us': blackrock,
   invesco,
+  jpmorgan,
   schwab,
+  'state-street': stateStreet,
   'vanguard-ca': vanguardCanada,
   'vanguard-us': vanguard
 };
