@@ -1,6 +1,13 @@
 name: Update ETF data
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "data-pipeline/**"
+      - "package.json"
+      - "package-lock.json"
   workflow_dispatch:
   schedule:
     - cron: "23 10 * * 1-5"

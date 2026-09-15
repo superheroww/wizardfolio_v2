@@ -57,4 +57,5 @@ multi-megabyte holdings bundle is no longer downloaded by every visitor.
 To add a fund from a supported issuer, add its identifiers to
 `data-pipeline/config/funds.json`, enable it, and run the tests plus `npm run data:update`.
 Issuer-specific parsing stays in `data-pipeline/adapters/`, so scheduled updates and
-local runs use the same validation and publishing path.
+local runs use the same validation and publishing path. Merging pipeline changes into
+`main` automatically runs the same update and publishes the validated catalogue.
