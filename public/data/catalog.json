@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "bab8732795e4",
-  "generatedAt": "2026-09-15T11:37:06.008Z",
+  "version": "24ca335cf23a",
+  "generatedAt": "2026-09-15T15:04:28.283Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -95,9 +95,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.37
+      "coverageWeight": 98.46
     },
     {
       "symbol": "VEQT.TO",
@@ -371,9 +371,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.59
+      "coverageWeight": 98.56
     },
     {
       "symbol": "VWO",
@@ -395,9 +395,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-11",
       "quality": "complete",
-      "coverageWeight": 98.82
+      "coverageWeight": 98.79
     },
     {
       "symbol": "SCHD",
@@ -443,7 +443,7 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
       "coverageWeight": 99.99
     },
@@ -527,9 +527,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 99.98
+      "coverageWeight": 99.99
     },
     {
       "symbol": "GOVT",
@@ -551,9 +551,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 99.47
+      "coverageWeight": 99.45
     }
   ]
 }
