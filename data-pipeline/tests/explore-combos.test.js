@@ -14,6 +14,13 @@ function loadWizardFolioData() {
   return context.window.WIZARD_FOLIO_DATA;
 }
 
+function loadStartupData() {
+  const context = { window: {} };
+  vm.runInNewContext(fs.readFileSync(path.join(repositoryRoot, 'mock-data.js'), 'utf8'), context);
+  vm.runInNewContext(fs.readFileSync(path.join(repositoryRoot, 'etf-catalog.js'), 'utf8'), context);
+  return context.window.WIZARD_FOLIO_DATA;
+}
+
 test('Explorer publishes ten valid, distinct combinations', () => {
   const { comboDefinitions } = loadWizardFolioData();
   const ids = new Set();
@@ -43,11 +50,13 @@ test('every Explorer ticker resolves to an enabled published fund', () => {
 });
 
 test('Home stays focused on exactly three featured combinations', () => {
-  const { comboDefinitions, popularCombos, presets } = loadWizardFolioData();
+  const { comboDefinitions, initialPortfolio, popularCombos, presets } = loadWizardFolioData();
   const featured = comboDefinitions.filter(combo => combo.featured);
 
   assert.equal(featured.length, 3);
   assert.equal(popularCombos.length, 3);
+  assert.deepEqual(Array.from(initialPortfolio.tickers), ['VOO', 'XEQT']);
+  assert.deepEqual(Array.from(initialPortfolio.weights), [60, 40]);
   assert.deepEqual(
     [...Object.keys(presets)].sort(),
     [...comboDefinitions.map(combo => combo.preset)].sort()
@@ -63,4 +72,16 @@ test('Explorer categories are explicit and backed by filter controls', () => {
   comboDefinitions.flatMap(combo => combo.tags).forEach(tag => {
     assert.ok(filters.has(tag), `missing Explorer filter for ${tag}`);
   });
+});
+
+test('startup portfolio is available before asynchronous catalog hydration', () => {
+  const { etfs, initialPortfolio } = loadStartupData();
+  const appSource = fs.readFileSync(path.join(repositoryRoot, 'app.js'), 'utf8');
+
+  initialPortfolio.tickers.forEach(ticker => {
+    assert.ok(etfs[ticker], `${ticker} is unavailable during synchronous startup`);
+  });
+  assert.equal(initialPortfolio.tickers.length, initialPortfolio.weights.length);
+  assert.equal(initialPortfolio.weights.reduce((sum, weight) => sum + weight, 0), 100);
+  assert.doesNotMatch(appSource, /presetData\.core/);
 });

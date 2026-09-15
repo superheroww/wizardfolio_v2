@@ -106,6 +106,7 @@ const homeOverlapPairs = [
 ];
 
 window.WIZARD_FOLIO_DATA = {
+  initialPortfolio: { tickers: ['VOO', 'XEQT'], weights: [60, 40] },
   portfolioValue: 10000,
   etfs: {
     VOO: {

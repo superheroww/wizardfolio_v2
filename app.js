@@ -1,4 +1,8 @@
-const { etfs, presets: presetData } = window.WIZARD_FOLIO_DATA;
+const { etfs, presets: presetData, initialPortfolio } = window.WIZARD_FOLIO_DATA;
+const initialPreset = initialPortfolio || {
+  tickers: ['VOO', 'XEQT'],
+  weights: [60, 40]
+};
 const publishedData = window.WizardFolioDataClient.createClient({ store: etfs });
 let publishedCatalogTickers = null;
 const screens = document.querySelectorAll('.screen');
@@ -8,8 +12,8 @@ const exploreComboList = document.querySelector('#exploreComboList');
 const homeOverlapList = document.querySelector('#homeOverlapList');
 const exploreFilterButtons = document.querySelectorAll('#explore .filters button');
 const state = {
-  tickers: [...presetData.core.tickers],
-  weights: [...presetData.core.weights],
+  tickers: [...initialPreset.tickers],
+  weights: [...initialPreset.weights],
   portfolioValue: 100000,
   reportingCurrency: 'CAD',
   exploreFilter: 'all'
