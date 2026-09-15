@@ -44,8 +44,14 @@ npm test
 npm run data:update:fixture
 ```
 
-Run `npm run data:update` to retrieve configured issuer files. Raw downloads are retained
+Run `npm run data:update` to retrieve configured issuer files from BlackRock/iShares,
+Vanguard US, Invesco, and Schwab. Raw downloads are retained
 under `data-pipeline/raw/<date>/`. Only funds that pass the publication rules are written
 to `public/data`; a failed or partial import is recorded in the manifest and is not
 published as complete data. The existing browser dataset is intentionally unchanged
 until the generated pipeline output passes the launch gates.
+
+To add a fund from a supported issuer, add its identifiers to
+`data-pipeline/config/funds.json`, enable it, and run the tests plus `npm run data:update`.
+Issuer-specific parsing stays in `data-pipeline/adapters/`, so scheduled updates and
+local runs use the same validation and publishing path.

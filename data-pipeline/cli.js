@@ -4,8 +4,11 @@
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const blackrock = require('./adapters/blackrock');
+const invesco = require('./adapters/invesco');
+const schwab = require('./adapters/schwab');
 const vanguard = require('./adapters/vanguard');
 const { fixtureFund, loadCurrentFixture } = require('./lib/fixture');
+const { fetchText } = require('./lib/fetch');
 const { checksum, ensureDirectory, readJson, writeJson } = require('./lib/io');
 const { securityId } = require('./lib/identity');
 const { validateFund } = require('./lib/validate');
@@ -16,20 +19,31 @@ const configPath = path.join(__dirname, 'config', 'funds.json');
 const rawRoot = path.join(__dirname, 'raw');
 const outputRoot = path.join(repositoryRoot, 'public', 'data');
 
+const adapters = {
+  'blackrock-ca': blackrock,
+  'blackrock-us': blackrock,
+  invesco,
+  schwab,
+  'vanguard-us': vanguard
+};
+
 function dateStamp(date = new Date()) {
   return date.toISOString().slice(0, 10);
 }
 
 async function downloadFund(fund) {
-  const adapter = fund.issuer.startsWith('blackrock') ? blackrock : fund.issuer.startsWith('vanguard') ? vanguard : null;
+  const adapter = adapters[fund.issuer];
   if (!adapter) throw new Error(`${fund.symbol}: no adapter for ${fund.issuer}`);
   const url = adapter.sourceUrl(fund);
-  const response = await fetch(url, { headers: { 'user-agent': 'WizardFolio data pipeline/1.0' } });
-  if (!response.ok) throw new Error(`${fund.symbol}: issuer returned HTTP ${response.status}`);
-  const body = await response.text();
+  let body;
+  try {
+    body = await fetchText(url, { headers: { 'user-agent': 'WizardFolio data pipeline/1.0' } });
+  } catch (error) {
+    throw new Error(`${fund.symbol}: ${error.message}`);
+  }
   const directory = path.join(rawRoot, dateStamp());
   await ensureDirectory(directory);
-  const extension = fund.issuer.startsWith('vanguard') ? 'json' : 'csv';
+  const extension = adapter.rawExtension || (fund.issuer.startsWith('vanguard') ? 'json' : 'csv');
   await fs.writeFile(path.join(directory, `${fund.symbol.replace(/[^A-Z0-9.-]/gi, '_')}.${extension}`), body, 'utf8');
   return adapter.parse(body, fund, { sourceUrl: url, retrievedAt: new Date().toISOString(), sourceChecksum: checksum(body) });
 }
