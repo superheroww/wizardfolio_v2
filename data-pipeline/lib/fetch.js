@@ -2,7 +2,7 @@
 
 const retryableStatus = status => status === 408 || status === 429 || status >= 500;
 
-async function fetchText(url, options = {}) {
+async function fetchResponse(url, options = {}) {
   const attempts = options.attempts || 3;
   const timeoutMs = options.timeoutMs || 30000;
   let lastError;
@@ -15,7 +15,7 @@ async function fetchText(url, options = {}) {
         body: options.body,
         signal: AbortSignal.timeout(timeoutMs)
       });
-      if (response.ok) return response.text();
+      if (response.ok) return response;
       const error = new Error(`issuer returned HTTP ${response.status}`);
       error.retryable = retryableStatus(response.status);
       if (!error.retryable || attempt === attempts) throw error;
@@ -32,4 +32,12 @@ async function fetchText(url, options = {}) {
   throw lastError;
 }
 
-module.exports = { fetchText, retryableStatus };
+async function fetchText(url, options = {}) {
+  return (await fetchResponse(url, options)).text();
+}
+
+async function fetchBuffer(url, options = {}) {
+  return Buffer.from(await (await fetchResponse(url, options)).arrayBuffer());
+}
+
+module.exports = { fetchBuffer, fetchResponse, fetchText, retryableStatus };

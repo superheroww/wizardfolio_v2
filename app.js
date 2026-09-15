@@ -1,5 +1,6 @@
 const { etfs, presets: presetData } = window.WIZARD_FOLIO_DATA;
 const publishedData = window.WizardFolioDataClient.createClient({ store: etfs });
+let publishedCatalogTickers = null;
 const screens = document.querySelectorAll('.screen');
 const navButtons = document.querySelectorAll('nav button[data-screen]');
 const comboList = document.querySelector('#comboList');
@@ -1682,6 +1683,7 @@ function renderBuilder() {
 
 function availableTickers() {
   return Object.entries(etfs)
+    .filter(([ticker]) => !publishedCatalogTickers || publishedCatalogTickers.has(ticker))
     .sort(([, left], [, right]) => left.name.localeCompare(right.name))
     .map(([ticker]) => ticker);
 }
@@ -1986,7 +1988,8 @@ renderPortfolio();
 
 async function hydratePublishedData() {
   try {
-    await publishedData.loadCatalog();
+    const catalog = await publishedData.loadCatalog();
+    publishedCatalogTickers = new Set(catalog.map(window.WizardFolioDataClient.displayTicker));
     renderBuilder();
     await publishedData.loadFunds(state.tickers);
     renderBuilder();
