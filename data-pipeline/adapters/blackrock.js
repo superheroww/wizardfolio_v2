@@ -94,4 +94,4 @@ function parse(csv, fund, metadata = {}) {
   };
 }
 
-module.exports = { parse, sourceUrl };
+module.exports = { parse, rawExtension: 'csv', sourceUrl };

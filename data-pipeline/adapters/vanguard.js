@@ -60,4 +60,4 @@ function parse(payload, fund, metadata = {}) {
   };
 }
 
-module.exports = { parse, sourceUrl };
+module.exports = { parse, rawExtension: 'json', sourceUrl };
