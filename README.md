@@ -48,8 +48,11 @@ Run `npm run data:update` to retrieve configured issuer files from BlackRock/iSh
 Vanguard US, Invesco, and Schwab. Raw downloads are retained
 under `data-pipeline/raw/<date>/`. Only funds that pass the publication rules are written
 to `public/data`; a failed or partial import is recorded in the manifest and is not
-published as complete data. The existing browser dataset is intentionally unchanged
-until the generated pipeline output passes the launch gates.
+published as complete data. Each successful run also creates `public/data/catalog.json`.
+The browser uses that small catalogue to populate Add ETF, then loads a selected fund's
+holdings and any nested ETF dependencies on demand. The compact checked-in browser
+catalogue remains an offline fallback when published data cannot be reached; the older
+multi-megabyte holdings bundle is no longer downloaded by every visitor.
 
 To add a fund from a supported issuer, add its identifiers to
 `data-pipeline/config/funds.json`, enable it, and run the tests plus `npm run data:update`.
