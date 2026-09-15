@@ -259,6 +259,7 @@ function hasConstituentData(ticker) {
 }
 
 function securityKey(security, fallbackExchange = '') {
+  if (security.id) return security.id;
   if (security.isin) return `ISIN:${normalizeIdentifier(security.isin)}`;
   if (security.cusip) return `CUSIP:${normalizeIdentifier(security.cusip)}`;
   const ticker = normalizeIdentifier(security.ticker);

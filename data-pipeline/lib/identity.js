@@ -8,6 +8,7 @@ function securityId(security) {
   if (security.isin) return `ISIN:${compact(security.isin)}`;
   if (security.cusip) return `CUSIP:${compact(security.cusip)}`;
   if (security.sedol) return `SEDOL:${compact(security.sedol)}`;
+  if (security.sourceId) return `SOURCE:${compact(security.sourceId)}`;
   if (security.exchange && security.ticker) {
     return `LISTING:${compact(security.exchange)}:${clean(security.ticker)}`;
   }

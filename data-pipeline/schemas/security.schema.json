@@ -17,7 +17,8 @@
     "sector": { "type": ["string", "null"] },
     "isin": { "type": ["string", "null"] },
     "cusip": { "type": ["string", "null"] },
-    "sedol": { "type": ["string", "null"] }
+    "sedol": { "type": ["string", "null"] },
+    "sourceId": { "type": ["string", "null"] }
   },
   "additionalProperties": true
 }
