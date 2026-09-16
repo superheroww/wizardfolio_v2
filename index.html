@@ -6,17 +6,24 @@
     <meta name="theme-color" content="#f7f1e7" />
     <title>Look-Through — ETF overlap</title>
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./refinement.css?v=20260916-5" />
+    <link rel="stylesheet" href="./refinement.css?v=20260916-6" />
   </head>
   <body>
     <main class="app-shell">
       <section id="home" class="screen active" aria-labelledby="home-title">
-        <header class="topbar"><a class="wordmark" href="/" data-home-link>Look-Through</a><span class="avatar">JD</span></header>
+        <header class="home-brand"><a href="/" data-home-link>Wizardfolio</a></header>
         <div class="hero"><h1 id="home-title">Look through<br />your <em>ETFs</em></h1><p class="lede">See what you actually own.</p></div>
-        <div class="mix-card"><p class="label">Build your mix</p><div class="mix-values"><div><b id="homeTickerOne">VOO</b><strong id="homeVoo">60<sup>%</sup></strong></div><div><b id="homeTickerTwo">XEQT</b><strong id="homeXeqt">40<sup>%</sup></strong></div></div><div class="mix-meter"><i style="width:60%"></i><i style="width:40%"></i></div><button class="primary" data-screen="portfolio">See what’s underneath <span>→</span></button></div>
-        <div class="insight-grid"><article><small>You own Apple</small><strong id="homeAppleWeight">5.5%</strong><p id="homeAppleSources">through 2 ETFs</p></article><article><small>U.S. exposure</small><strong id="homeUsWeight">78%</strong><p>of everything you hold</p></article></div>
+        <section class="home-mix-card" aria-labelledby="home-mix-title">
+          <p class="home-section-label" id="home-mix-title">Build your mix</p>
+          <div class="home-mix-funds" id="homeMixFunds"></div>
+          <div class="home-allocation-meter" id="homeMixMeter" aria-label="Portfolio allocation"></div>
+          <button class="home-mix-cta" data-screen="portfolio">See what’s underneath <span>→</span></button>
+        </section>
+        <section class="home-insights" aria-labelledby="home-insights-title">
+          <header><h2 id="home-insights-title">See beyond the ticker</h2><p>Your ETFs can tell a different story underneath.</p></header>
+          <div class="home-insight-grid" id="homeInsightGrid" aria-live="polite"></div>
+        </section>
         <section class="content-section"><h2>Popular combinations</h2><div class="combo-list" id="comboList"></div></section>
-        <section class="content-section"><h2>Hidden overlaps</h2><p class="section-copy">Same company, different tickers.</p><div class="overlap-list" id="homeOverlapList"></div></section>
       </section>
 
       <section id="explore" class="screen" aria-labelledby="explore-title">
@@ -70,6 +77,6 @@
     <script src="./mock-data.js?v=20260915-2"></script>
     <script src="./etf-catalog.js?v=20260817-5"></script>
     <script src="./data-client.js?v=20260915-1"></script>
-    <script src="./app.js?v=20260916-6"></script>
+    <script src="./app.js?v=20260916-7"></script>
   </body>
 </html>
