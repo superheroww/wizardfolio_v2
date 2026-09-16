@@ -5,6 +5,10 @@ const initialPreset = initialPortfolio || {
 };
 const publishedData = window.WizardFolioDataClient.createClient({ store: etfs });
 let publishedCatalogTickers = null;
+let catalogReadyPromise = null;
+let exploreObserver = null;
+const exploreLoading = new Set();
+const exploreFailed = new Set();
 const screens = document.querySelectorAll('.screen');
 const navButtons = document.querySelectorAll('nav button[data-screen]');
 const comboList = document.querySelector('#comboList');
@@ -186,6 +190,7 @@ function showScreen(id) {
   screens.forEach(screen => screen.classList.toggle('active', screen.id === id));
   navButtons.forEach(button => button.classList.toggle('nav-active', button.dataset.screen === id));
   if (id === 'portfolio') renderPortfolio();
+  if (id === 'explore') observeExploreCards();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.querySelectorAll('[data-screen]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.screen)));
@@ -685,13 +690,54 @@ function formatMixSummary(tickers, weights, separator = ' + ') {
   return tickers.map((ticker, index) => `${ticker} ${Math.round(weights[index] || 0)}%`).join(separator);
 }
 
-function renderExploreTickerPills(tickers, weights) {
-  return tickers.map((ticker, index) => `
-    <span class="explore-mix-pill">${ticker} ${Math.round(weights[index] || 0)}%</span>
-  `).join('');
+function explorePreview(combo) {
+  if (!combo) return null;
+  const loaded = combo.tickers.every(ticker => etfs[ticker]?.pipelineLoaded);
+  if (!loaded) return null;
+  const snapshot = buildMixSnapshot(combo.tickers, combo.weights);
+  if (!snapshot.holdings.length) return null;
+  return {
+    count: snapshot.holdings.length,
+    sector: snapshot.sectors[0] || null,
+    geography: snapshot.geography[0] || null,
+    holdings: snapshot.holdings.slice(0, 3)
+  };
+}
+
+function exploreMetricMarkup(icon, label, value) {
+  if (!label || !value) return '';
+  return `<span class="explore-preview-metric"><i aria-hidden="true">${icon}</i><b>${label}</b><small>${value}</small></span>`;
+}
+
+function explorePreviewMarkup(combo, preview) {
+  if (!preview && exploreFailed.has(combo.id)) {
+    return `<div class="explore-card-body explore-card-body-fallback"><p class="explore-combo-note">${combo.note}</p></div>`;
+  }
+  if (!preview) {
+    return `<div class="explore-card-body explore-card-body-loading" aria-label="Loading verified portfolio preview">
+      <span></span><span></span><span></span>
+      <i></i><i></i><i></i>
+    </div>`;
+  }
+  const metrics = [
+    preview.sector ? exploreMetricMarkup('▥', preview.sector[0], formatPercent(preview.sector[1])) : '',
+    preview.geography ? exploreMetricMarkup('◎', preview.geography[0], formatPercent(preview.geography[1])) : '',
+    exploreMetricMarkup('◇', 'Holdings', formatInteger(preview.count))
+  ].filter(Boolean).join('');
+  const holdings = preview.holdings.map(holding => `<span class="explore-preview-holding">
+    ${logoMarkup(holdingLogoTicker(holding), holding.name, 40, 'holding-logo-small')}
+    <b>${holding.symbol || holding.name}</b>
+    <strong>${formatPercent(holding.weight)}</strong>
+  </span>`).join('');
+  return `<div class="explore-card-body">
+    <div class="explore-preview-metrics">${metrics}</div>
+    <div class="explore-preview-holdings">${holdings}</div>
+  </div>`;
 }
 
 function renderExploreCard(combo) {
+  const preview = explorePreview(combo);
+  const failed = exploreFailed.has(combo.id);
   const mixLabel = formatMixSummary(combo.tickers, combo.weights);
   const callToAction = combo.preset
     ? `data-preset="${combo.preset}"`
@@ -700,19 +746,18 @@ function renderExploreCard(combo) {
       : '';
 
   return `
-    <article class="explore-card" data-explore-tags="${exploreTagsForCombo(combo).join(' ')}">
+    <article class="explore-card${preview ? ' is-ready' : failed ? ' is-fallback' : ' is-loading'}" data-explore-id="${combo.id}" data-explore-tags="${exploreTagsForCombo(combo).join(' ')}">
+      <button class="explore-card-open" type="button" ${callToAction} aria-label="Open ${combo.title}"></button>
       <div class="explore-card-top" style="background:${combo.background};">
         <div class="explore-card-heading">
           <em>${combo.badge}</em>
           <h2>${combo.title}</h2>
           <p>${mixLabel}</p>
         </div>
+        ${preview ? `<div class="explore-card-count"><strong>${formatInteger(preview.count)}</strong><span>underlying names</span></div>` : failed ? '' : `<div class="explore-card-count-skeleton" aria-hidden="true"><i></i><span></span></div>`}
+        <span class="explore-card-chevron" aria-hidden="true">›</span>
       </div>
-      <div class="explore-card-body">
-        <div class="explore-mix-pills">${renderExploreTickerPills(combo.tickers, combo.weights)}</div>
-        <p class="explore-combo-note">${combo.note}</p>
-        <button class="try-mix" type="button" ${callToAction}>Try this mix <span>→</span></button>
-      </div>
+      ${explorePreviewMarkup(combo, preview)}
     </article>
   `;
 }
@@ -1064,6 +1109,49 @@ function renderExploreCombos() {
   applyExploreFilter(state.exploreFilter);
 }
 
+function replaceExploreCard(combo) {
+  const current = exploreComboList?.querySelector(`[data-explore-id="${combo.id}"]`);
+  if (!current) return;
+  current.outerHTML = renderExploreCard(combo);
+  applyExploreFilter(state.exploreFilter);
+}
+
+async function hydrateExploreCard(combo) {
+  if (!combo) return;
+  if (exploreLoading.has(combo.id) || explorePreview(combo) || exploreFailed.has(combo.id)) return;
+  exploreLoading.add(combo.id);
+  try {
+    await (catalogReadyPromise || Promise.resolve());
+    await publishedData.loadFunds(combo.tickers);
+    if (!explorePreview(combo)) throw new Error('Verified look-through preview is unavailable');
+  } catch (error) {
+    exploreFailed.add(combo.id);
+    console.warn(`${combo.id}: Explorer preview is unavailable.`, error);
+  } finally {
+    exploreLoading.delete(combo.id);
+    replaceExploreCard(combo);
+  }
+}
+
+function observeExploreCards() {
+  if (!exploreComboList) return;
+  const definitions = new Map(window.WIZARD_FOLIO_DATA.comboDefinitions.map(combo => [combo.id, combo]));
+  const cards = [...exploreComboList.querySelectorAll('[data-explore-id]:not([hidden])')]
+    .filter(card => !explorePreview(definitions.get(card.dataset.exploreId)) && !exploreFailed.has(card.dataset.exploreId));
+  exploreObserver?.disconnect();
+  if (!('IntersectionObserver' in window)) {
+    cards.slice(0, 2).forEach(card => hydrateExploreCard(definitions.get(card.dataset.exploreId)));
+    return;
+  }
+  exploreObserver = new IntersectionObserver(entries => {
+    entries.filter(entry => entry.isIntersecting).forEach(entry => {
+      exploreObserver.unobserve(entry.target);
+      hydrateExploreCard(definitions.get(entry.target.dataset.exploreId));
+    });
+  }, { rootMargin: '240px 0px' });
+  cards.forEach(card => exploreObserver.observe(card));
+}
+
 function applyExploreFilter(filter = state.exploreFilter) {
   state.exploreFilter = filter;
   const explore = document.querySelector('#explore');
@@ -1093,6 +1181,7 @@ function applyExploreFilter(filter = state.exploreFilter) {
       ? ''
       : `Filtered to ${visibleCount} mix${visibleCount === 1 ? '' : 'es'} that match “${filter}.”`;
   }
+  if (document.querySelector('#explore.active')) requestAnimationFrame(observeExploreCards);
 }
 
 function portfolioValueControlMarkup() {
@@ -1914,7 +2003,7 @@ async function refreshPublishedFunds(tickers) {
   }
 }
 
-hydratePublishedData();
+catalogReadyPromise = hydratePublishedData();
 
 
 function runCalculationAudit() {

@@ -74,14 +74,21 @@ test('Explorer categories are explicit and backed by filter controls', () => {
   });
 });
 
-test('Explorer cards stay compact and never present unloaded analysis', () => {
+test('Explorer cards show verified previews and never present unavailable analysis', () => {
   const { comboDefinitions } = loadWizardFolioData();
   const appSource = fs.readFileSync(path.join(repositoryRoot, 'app.js'), 'utf8');
+  const explorerSource = appSource.slice(
+    appSource.indexOf('function explorePreview('),
+    appSource.indexOf('function exploreTagsForCombo(')
+  );
 
   comboDefinitions.forEach(combo => assert.ok(combo.note, `${combo.id} is missing its explanation`));
-  assert.doesNotMatch(appSource, /No overlap data/);
-  assert.doesNotMatch(appSource, /Underlying company holdings are not available for this mix/);
-  assert.doesNotMatch(appSource, /explore-card-count|explore-stat-grid|explore-overlap-card|explore-holdings-strip/);
+  assert.match(explorerSource, /pipelineLoaded/);
+  assert.match(explorerSource, /snapshot\.holdings\.length/);
+  assert.match(explorerSource, /explore-card-body-loading/);
+  assert.match(explorerSource, /explore-preview-metrics/);
+  assert.doesNotMatch(explorerSource, /uniqueEstimate/);
+  assert.doesNotMatch(appSource, /No overlap data|Underlying company holdings are not available for this mix/);
 });
 
 test('startup portfolio is available before asynchronous catalog hydration', () => {
