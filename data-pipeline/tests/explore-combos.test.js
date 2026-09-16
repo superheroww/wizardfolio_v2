@@ -74,6 +74,16 @@ test('Explorer categories are explicit and backed by filter controls', () => {
   });
 });
 
+test('Explorer cards stay compact and never present unloaded analysis', () => {
+  const { comboDefinitions } = loadWizardFolioData();
+  const appSource = fs.readFileSync(path.join(repositoryRoot, 'app.js'), 'utf8');
+
+  comboDefinitions.forEach(combo => assert.ok(combo.note, `${combo.id} is missing its explanation`));
+  assert.doesNotMatch(appSource, /No overlap data/);
+  assert.doesNotMatch(appSource, /Underlying company holdings are not available for this mix/);
+  assert.doesNotMatch(appSource, /explore-card-count|explore-stat-grid|explore-overlap-card|explore-holdings-strip/);
+});
+
 test('startup portfolio is available before asynchronous catalog hydration', () => {
   const { etfs, initialPortfolio } = loadStartupData();
   const appSource = fs.readFileSync(path.join(repositoryRoot, 'app.js'), 'utf8');
