@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "acc774b64173",
-  "generatedAt": "2026-09-16T19:54:01.799Z",
+  "version": "9e358647bbf9",
+  "generatedAt": "2026-09-16T20:02:01.633Z",
   "fixtureMode": false,
   "funds": [
     {
@@ -4580,9 +4580,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 99.89,
+      "coverageWeight": 99.76,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": [
         "Duplicate security identity LISTING:NOMARKETEGUNLISTED:ADRO",
@@ -6444,9 +6444,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 100.01,
+      "coverageWeight": 99.95,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": []
     },
@@ -6459,9 +6459,9 @@
       "currency": "USD",
       "issuer": "blackrock-us",
       "quality": "complete",
-      "coverageWeight": 99.45,
+      "coverageWeight": 99.6,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": [
         "Duplicate security identity ISIN:"

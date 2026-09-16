@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "acc774b64173",
-  "generatedAt": "2026-09-16T19:54:01.799Z",
+  "version": "9e358647bbf9",
+  "generatedAt": "2026-09-16T20:02:01.633Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -587,9 +587,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.89
+      "coverageWeight": 99.76
     },
     {
       "symbol": "BND",
@@ -647,9 +647,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 100.01
+      "coverageWeight": 99.95
     },
     {
       "symbol": "USIG",
@@ -659,9 +659,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.45
+      "coverageWeight": 99.6
     }
   ]
 }
