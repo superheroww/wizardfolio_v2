@@ -704,9 +704,15 @@ function explorePreview(combo) {
   };
 }
 
+const exploreMetricIcons = {
+  sector: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4 20V11"/><path d="M10 20V4"/><path d="M16 20v-6"/><path d="M22 20V8"/><path d="M2 20h22"/></svg>`,
+  geography: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18"/><path d="M12 3a15 15 0 0 0 0 18"/></svg>`,
+  holdings: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/></svg>`
+};
+
 function exploreMetricMarkup(icon, label, value) {
   if (!label || !value) return '';
-  return `<span class="explore-preview-metric"><i aria-hidden="true">${icon}</i><b>${label}</b><small>${value}</small></span>`;
+  return `<span class="explore-preview-metric"><i aria-hidden="true">${exploreMetricIcons[icon]}</i><b>${label}</b><small>${value}</small></span>`;
 }
 
 function explorePreviewMarkup(combo, preview) {
@@ -720,9 +726,9 @@ function explorePreviewMarkup(combo, preview) {
     </div>`;
   }
   const metrics = [
-    preview.sector ? exploreMetricMarkup('▥', preview.sector[0], formatPercent(preview.sector[1])) : '',
-    preview.geography ? exploreMetricMarkup('◎', preview.geography[0], formatPercent(preview.geography[1])) : '',
-    exploreMetricMarkup('◇', 'Holdings', formatInteger(preview.count))
+    preview.sector ? exploreMetricMarkup('sector', preview.sector[0], formatPercent(preview.sector[1])) : '',
+    preview.geography ? exploreMetricMarkup('geography', preview.geography[0], formatPercent(preview.geography[1])) : '',
+    exploreMetricMarkup('holdings', 'Holdings', formatInteger(preview.count))
   ].filter(Boolean).join('');
   const holdings = preview.holdings.map(holding => `<span class="explore-preview-holding">
     ${logoMarkup(holdingLogoTicker(holding), holding.name, 40, 'holding-logo-small')}

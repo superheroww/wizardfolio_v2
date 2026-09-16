@@ -87,6 +87,8 @@ test('Explorer cards show verified previews and never present unavailable analys
   assert.match(explorerSource, /snapshot\.holdings\.length/);
   assert.match(explorerSource, /explore-card-body-loading/);
   assert.match(explorerSource, /explore-preview-metrics/);
+  assert.match(explorerSource, /exploreMetricIcons/);
+  assert.doesNotMatch(explorerSource, /▥|◎|◇/);
   assert.doesNotMatch(explorerSource, /uniqueEstimate/);
   assert.doesNotMatch(appSource, /No overlap data|Underlying company holdings are not available for this mix/);
 });

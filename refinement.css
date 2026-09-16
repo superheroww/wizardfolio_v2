@@ -242,7 +242,8 @@ nav button.nav-active .nav-icon { font-size: 20px; }
 .explore-preview-metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:13px 10px 12px; background:#f8f9fc; }
 .explore-preview-metric { display:grid; grid-template-columns:24px minmax(0,1fr); grid-template-rows:auto auto; gap:2px 7px; min-width:0; padding:0 9px; border-left:1px solid #e1e5ed; }
 .explore-preview-metric:first-child { border-left:0; }
-.explore-preview-metric i { grid-row:1/-1; align-self:center; color:#738096; font:400 22px/1 Arial,sans-serif; font-style:normal; }
+.explore-preview-metric i { display:grid; grid-row:1/-1; align-self:center; width:24px; height:24px; place-items:center; color:#738096; font-style:normal; }
+.explore-preview-metric i svg { display:block; width:22px; height:22px; }
 .explore-preview-metric b { overflow:hidden; color:#171d2d; font:700 11px/1.15 'DM Sans',sans-serif; text-overflow:ellipsis; white-space:nowrap; }
 .explore-preview-metric small { color:#6f788a; font:11px/1.2 'DM Sans',sans-serif; }
 .explore-preview-holdings { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; padding:10px; }
@@ -264,7 +265,8 @@ nav button.nav-active .nav-icon { font-size: 20px; }
   .explore-card-count strong { font-size:25px; }
   .explore-preview-metrics { padding-right:5px; padding-left:5px; }
   .explore-preview-metric { grid-template-columns:18px minmax(0,1fr); gap:2px 4px; padding:0 5px; }
-  .explore-preview-metric i { font-size:18px; }
+  .explore-preview-metric i { width:18px; height:18px; }
+  .explore-preview-metric i svg { width:18px; height:18px; }
   .explore-preview-holdings { gap:4px; padding:8px 6px; }
   .explore-preview-holding { grid-template-columns:22px minmax(0,1fr); gap:4px; padding:4px; }
   .explore-preview-holding .holding-logo { width:22px; height:22px; }
