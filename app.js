@@ -261,10 +261,11 @@ function hasConstituentData(ticker) {
 }
 
 function securityKey(security, fallbackExchange = '') {
+  const ticker = normalizeIdentifier(security.ticker);
+  if (security.type === 'stock' && ticker) return `STOCK:${ticker}`;
   if (security.id) return security.id;
   if (security.isin) return `ISIN:${normalizeIdentifier(security.isin)}`;
   if (security.cusip) return `CUSIP:${normalizeIdentifier(security.cusip)}`;
-  const ticker = normalizeIdentifier(security.ticker);
   if (ticker) return `TICKER:${ticker}`;
   return `NAME:${normalizeName(security.name)}`;
 }
@@ -760,7 +761,6 @@ function renderExploreCard(combo) {
           <h2>${combo.title}</h2>
           <p>${mixLabel}</p>
         </div>
-        ${preview ? `<div class="explore-card-count"><strong>${formatInteger(preview.count)}</strong><span>underlying names</span></div>` : failed ? '' : `<div class="explore-card-count-skeleton" aria-hidden="true"><i></i><span></span></div>`}
         <span class="explore-card-chevron" aria-hidden="true">›</span>
       </div>
       ${explorePreviewMarkup(combo, preview)}
@@ -1174,19 +1174,6 @@ function applyExploreFilter(filter = state.exploreFilter) {
     card.hidden = !(filter === 'all' || tags.includes(filter));
   });
 
-  const allMixesSection = explore.querySelector('.explore-all');
-  if (!allMixesSection) return;
-  const heading = allMixesSection.querySelector('h2');
-  const copy = allMixesSection.querySelector('.section-copy');
-  const visibleCount = allMixesSection.querySelectorAll('[data-explore-tags]:not([hidden])').length;
-  if (heading) {
-    heading.textContent = filter === 'all' ? 'All portfolio mixes' : `Showing ${filter} mixes`;
-  }
-  if (copy) {
-    copy.textContent = filter === 'all'
-      ? ''
-      : `Filtered to ${visibleCount} mix${visibleCount === 1 ? '' : 'es'} that match “${filter}.”`;
-  }
   if (document.querySelector('#explore.active')) requestAnimationFrame(observeExploreCards);
 }
 
