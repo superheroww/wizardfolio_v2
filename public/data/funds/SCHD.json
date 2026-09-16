@@ -9,9 +9,9 @@
   "currency": "USD",
   "issuer": "schwab",
   "holdingsDate": "2026-09-15",
-  "retrievedAt": "2026-09-16T15:01:45.489Z",
+  "retrievedAt": "2026-09-16T19:38:20.739Z",
   "sourceUrl": "https://www.schwabassetmanagement.com/allholdings/SCHD",
-  "sourceChecksum": "aadda2203f8fc7dbc997bb3e93193d0c92700942933e115df5c73241c86914e8",
+  "sourceChecksum": "a3207b7b9e1c8b030f0d316a538b05ead998817fe4a0f894291480a45b5e8fd5",
   "weightMethod": "issuer-reported",
   "reportedCoverage": 100.06,
   "coverageWeight": 100.06,
@@ -1033,9 +1033,9 @@
       "country": "US",
       "sector": null,
       "isin": null,
-      "cusip": "7839989D1",
+      "cusip": "857492706",
       "sedol": null,
-      "id": "CUSIP:7839989D1"
+      "id": "CUSIP:857492706"
     },
     {
       "type": "stock",

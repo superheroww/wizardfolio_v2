@@ -9,9 +9,9 @@
   "currency": "USD",
   "issuer": "schwab",
   "holdingsDate": "2026-09-09",
-  "retrievedAt": "2026-09-16T15:01:43.476Z",
+  "retrievedAt": "2026-09-16T19:38:14.229Z",
   "sourceUrl": "https://www.schwabassetmanagement.com/allholdings/SCHB",
-  "sourceChecksum": "da0164ef33e473e4c86adced5d28741106089c2a590539ce433ca479f0e287a3",
+  "sourceChecksum": "3832e7f13169e268bc6800370b5cebc762a027f2ca04b56ae051e1badea1df83",
   "weightMethod": "issuer-reported",
   "reportedCoverage": 98.57,
   "coverageWeight": 98.57,
@@ -4243,9 +4243,9 @@
       "country": "US",
       "sector": null,
       "isin": null,
-      "cusip": "7839989D1",
+      "cusip": "857492706",
       "sedol": null,
-      "id": "CUSIP:7839989D1"
+      "id": "CUSIP:857492706"
     },
     {
       "type": "stock",

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "1139f209704a",
-  "generatedAt": "2026-09-16T15:01:51.199Z",
+  "version": "ff1344679f45",
+  "generatedAt": "2026-09-16T19:38:26.946Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -95,9 +95,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.53
+      "coverageWeight": 98.46
     },
     {
       "symbol": "VEQT.TO",
@@ -455,9 +455,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 98.56
+      "coverageWeight": 98.47
     },
     {
       "symbol": "VWO",
