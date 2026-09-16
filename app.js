@@ -10,7 +10,7 @@ let exploreObserver = null;
 const exploreLoading = new Set();
 const exploreFailed = new Set();
 const screens = document.querySelectorAll('.screen');
-const navButtons = document.querySelectorAll('nav button[data-screen]');
+const navButtons = document.querySelectorAll('nav button[data-nav-target]');
 const comboList = document.querySelector('#comboList');
 const exploreComboList = document.querySelector('#exploreComboList');
 const homeOverlapList = document.querySelector('#homeOverlapList');
@@ -186,20 +186,30 @@ function normalizeCountryRegion(country) {
   return country ? 'Rest of world' : '';
 }
 
-function showScreen(id) {
+function showScreen(id, navTarget = id === 'explore' ? 'explore' : id === 'builder' ? 'blend' : null) {
   screens.forEach(screen => screen.classList.toggle('active', screen.id === id));
-  navButtons.forEach(button => button.classList.toggle('nav-active', button.dataset.screen === id));
+  navButtons.forEach(button => {
+    const isActive = button.dataset.navTarget === navTarget;
+    button.classList.toggle('nav-active', isActive);
+    if (isActive) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  });
   if (id === 'portfolio') renderPortfolio();
   if (id === 'explore') observeExploreCards();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 document.querySelectorAll('[data-screen]').forEach(button => button.addEventListener('click', () => showScreen(button.dataset.screen)));
+document.querySelector('[data-home-link]')?.addEventListener('click', event => {
+  event.preventDefault();
+  window.history.pushState({}, '', '/');
+  showScreen('home', null);
+});
 document.addEventListener('click', async event => {
   const presetButton = event.target.closest('[data-preset], [data-action]');
   if (!presetButton) return;
   if (presetButton.dataset.action === 'compare') {
     comparePanelOpen = true;
-    showScreen('builder');
+    showScreen('builder', 'compare');
     renderComparePanel();
     requestAnimationFrame(() => {
       comparePanel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1960,7 +1970,7 @@ document.querySelector('#evenSplit').addEventListener('click', () => {
 });
 document.querySelector('#compare').addEventListener('click', () => {
   comparePanelOpen = true;
-  showScreen('builder');
+  showScreen('builder', 'compare');
   renderComparePanel();
   requestAnimationFrame(() => {
     comparePanel?.scrollIntoView({ behavior: 'smooth', block: 'start' });

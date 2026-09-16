@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#f7f1e7" />
     <title>Look-Through — ETF overlap</title>
     <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./refinement.css?v=20260916-3" />
+    <link rel="stylesheet" href="./refinement.css?v=20260916-4" />
   </head>
   <body>
     <main class="app-shell">
       <section id="home" class="screen active" aria-labelledby="home-title">
-        <header class="topbar"><a class="wordmark" href="#home">Look-Through</a><span class="avatar">JD</span></header>
+        <header class="topbar"><a class="wordmark" href="/" data-home-link>Look-Through</a><span class="avatar">JD</span></header>
         <div class="hero"><h1 id="home-title">Look through<br />your <em>ETFs</em></h1><p class="lede">See what you actually own.</p></div>
         <div class="mix-card"><p class="label">Build your mix</p><div class="mix-values"><div><b id="homeTickerOne">VOO</b><strong id="homeVoo">60<sup>%</sup></strong></div><div><b id="homeTickerTwo">XEQT</b><strong id="homeXeqt">40<sup>%</sup></strong></div></div><div class="mix-meter"><i style="width:60%"></i><i style="width:40%"></i></div><button class="primary" data-screen="portfolio">See what’s underneath <span>→</span></button></div>
         <div class="insight-grid"><article><small>You own Apple</small><strong id="homeAppleWeight">5.5%</strong><p id="homeAppleSources">through 2 ETFs</p></article><article><small>U.S. exposure</small><strong id="homeUsWeight">78%</strong><p>of everything you hold</p></article></div>
@@ -65,11 +65,11 @@
         <section class="geo-section"><p class="eyebrow">Geography</p><h2>Where in the world?</h2><div class="geo-row"><span>🇺🇸 United States</span><b>72%</b></div><div class="geo-row"><span>🇨🇦 Canada</span><b>12%</b></div><div class="geo-row"><span>🌍 Rest of world</span><b>5%</b></div><div class="geo-note">Top three = 89.0%.</div></section>
       </section>
 
-      <nav aria-label="Primary navigation"><button class="nav-active" data-screen="home"><span class="nav-icon">⌂</span><span>Home</span></button><button data-screen="explore"><span class="nav-icon">◉</span><span>Explore</span></button><button data-screen="builder"><span class="nav-icon nav-icon-blend" aria-hidden="true"><i></i><i></i><em></em></span><span>Blend</span></button><button id="compare" data-action="compare"><span class="nav-icon nav-icon-compare" aria-hidden="true"><i></i><i></i><em></em></span><span>Compare</span></button></nav>
+      <nav aria-label="Primary navigation"><button data-screen="explore" data-nav-target="explore"><span class="nav-icon">◉</span><span>Explore</span></button><button data-screen="builder" data-nav-target="blend"><span class="nav-icon nav-icon-blend" aria-hidden="true"><i></i><i></i><em></em></span><span>Blend</span></button><button id="compare" data-action="compare" data-nav-target="compare"><span class="nav-icon nav-icon-compare" aria-hidden="true"><i></i><i></i><em></em></span><span>Compare</span></button></nav>
     </main>
     <script src="./mock-data.js?v=20260915-2"></script>
     <script src="./etf-catalog.js?v=20260817-5"></script>
     <script src="./data-client.js?v=20260915-1"></script>
-    <script src="./app.js?v=20260916-4"></script>
+    <script src="./app.js?v=20260916-5"></script>
   </body>
 </html>
