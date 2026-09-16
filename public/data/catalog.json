@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "37e46043d7a7",
-  "generatedAt": "2026-09-15T23:02:41.688Z",
+  "version": "0a82dcce7a69",
+  "generatedAt": "2026-09-16T11:20:44.343Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -347,9 +347,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "state-street",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.951255
+      "coverageWeight": 99.95289
     },
     {
       "symbol": "IVV",
@@ -385,7 +385,7 @@
       "issuer": "schwab",
       "holdingsDate": "2026-09-09",
       "quality": "complete",
-      "coverageWeight": 98.6
+      "coverageWeight": 98.57
     },
     {
       "symbol": "QQQ",
@@ -395,9 +395,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.999997
+      "coverageWeight": 99.999993
     },
     {
       "symbol": "QQQM",
@@ -407,9 +407,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.999997
+      "coverageWeight": 99.999999
     },
     {
       "symbol": "VT",
@@ -491,9 +491,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "schwab",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 100.02
+      "coverageWeight": 100.06
     },
     {
       "symbol": "VIG",
@@ -527,7 +527,7 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
       "coverageWeight": 99.99
     },
@@ -539,9 +539,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "jpmorgan",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.77
+      "coverageWeight": 99.69
     },
     {
       "symbol": "JEPQ",
@@ -551,9 +551,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "jpmorgan",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.49
+      "coverageWeight": 99.54
     },
     {
       "symbol": "VB",

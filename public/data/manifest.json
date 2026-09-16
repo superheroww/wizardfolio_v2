@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "37e46043d7a7",
-  "generatedAt": "2026-09-15T23:02:41.688Z",
+  "version": "0a82dcce7a69",
+  "generatedAt": "2026-09-16T11:20:44.343Z",
   "fixtureMode": false,
   "funds": [
     {
@@ -2547,9 +2547,9 @@
       "currency": "USD",
       "issuer": "state-street",
       "quality": "complete",
-      "coverageWeight": 99.951255,
+      "coverageWeight": 99.95289,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": []
     },
@@ -2594,12 +2594,12 @@
       "currency": "USD",
       "issuer": "schwab",
       "quality": "complete",
-      "coverageWeight": 98.6,
+      "coverageWeight": 98.57,
       "publishable": true,
       "holdingsDate": "2026-09-09",
       "errors": [],
       "warnings": [
-        "Duplicate security identity CUSIP:91913Y100",
+        "Duplicate security identity CUSIP:701094104",
         "Duplicate security identity CUSIP:219350105"
       ]
     },
@@ -2612,9 +2612,9 @@
       "currency": "USD",
       "issuer": "invesco",
       "quality": "complete",
-      "coverageWeight": 99.999997,
+      "coverageWeight": 99.999993,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": [
         "Duplicate security identity CUSIP:NQZ6"
@@ -2629,9 +2629,9 @@
       "currency": "USD",
       "issuer": "invesco",
       "quality": "complete",
-      "coverageWeight": 99.999997,
+      "coverageWeight": 99.999999,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": [
         "Duplicate security identity CUSIP:NQZ6"
@@ -4454,9 +4454,9 @@
       "currency": "USD",
       "issuer": "schwab",
       "quality": "complete",
-      "coverageWeight": 100.02,
+      "coverageWeight": 100.06,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": []
     },
@@ -4501,7 +4501,7 @@
       "quality": "complete",
       "coverageWeight": 99.99,
       "publishable": true,
-      "holdingsDate": "2026-09-11",
+      "holdingsDate": "2026-09-14",
       "errors": [],
       "warnings": []
     },
@@ -4514,9 +4514,9 @@
       "currency": "USD",
       "issuer": "jpmorgan",
       "quality": "complete",
-      "coverageWeight": 99.77,
+      "coverageWeight": 99.69,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": []
     },
@@ -4529,9 +4529,9 @@
       "currency": "USD",
       "issuer": "jpmorgan",
       "quality": "complete",
-      "coverageWeight": 99.49,
+      "coverageWeight": 99.54,
       "publishable": true,
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "errors": [],
       "warnings": []
     },
