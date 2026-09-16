@@ -204,6 +204,9 @@ document.querySelector('[data-home-link]')?.addEventListener('click', event => {
   window.history.pushState({}, '', '/');
   showScreen('home', null);
 });
+document.querySelector('#homeMixFunds')?.addEventListener('click', event => {
+  if (event.target.closest('[data-home-mix-edit]')) showScreen('builder', 'blend');
+});
 document.addEventListener('click', async event => {
   const presetButton = event.target.closest('[data-preset], [data-action]');
   if (!presetButton) return;
@@ -1075,11 +1078,64 @@ function renderComparePanel() {
 }
 
 function updateHomeInsights() {
-  const apple = blendHoldings().find(holding => holding.symbol === 'AAPL');
-  document.querySelector('#homeAppleWeight').textContent = apple ? formatPercent(apple.weight) : '0%';
-  document.querySelector('#homeAppleSources').textContent = apple ? `through ${apple.sources.length} ETF${apple.sources.length === 1 ? '' : 's'}` : 'not in sampled holdings';
-  const geography = Object.fromEntries(summarizePortfolioGeography(state.tickers, state.weights));
-  document.querySelector('#homeUsWeight').textContent = formatPercent(geography['United States'] || 0);
+  const insightGrid = document.querySelector('#homeInsightGrid');
+  if (!insightGrid) return;
+
+  const snapshot = buildMixSnapshot(state.tickers, state.weights);
+  const company = snapshot.holdings[0] || null;
+  const companyFundCount = company
+    ? new Set(company.sources.map(source => source.ticker).filter(Boolean)).size
+    : 0;
+  const geography = snapshot.geography[0] || null;
+  const overlap = strongestPortfolioOverlap(state.tickers, state.weights);
+
+  const companyMarkup = company ? `
+    <b>${company.name}</b>
+    <strong>${formatPercent(company.weight)}</strong>
+    <p>via ${companyFundCount} ETF${companyFundCount === 1 ? '' : 's'}</p>
+  ` : '<b>Company exposure</b><p>Available when holdings data is loaded.</p>';
+  const geographyMarkup = geography ? `
+    <b>${geography[0]}</b>
+    <strong>${formatPercent(geography[1])}</strong>
+    <p>of your total exposure</p>
+  ` : '<b>Geographic exposure</b><p>Available when geography data is loaded.</p>';
+  const overlapMarkup = overlap ? `
+    <strong>${formatPercent(overlap.totalOverlap)}</strong>
+    <b>of your portfolio repeats</b>
+    <p>across ${overlap.tickerA} and ${overlap.tickerB}</p>
+  ` : '<b>Portfolio overlap</b><p>Add two ETFs with holdings data to compare.</p>';
+
+  insightGrid.innerHTML = `
+    <article class="home-insight-card">
+      <small>Company</small>
+      ${companyMarkup}
+    </article>
+    <article class="home-insight-card">
+      <small>Geography</small>
+      ${geographyMarkup}
+    </article>
+    <article class="home-insight-card home-insight-overlap">
+      <small>Overlap</small>
+      ${overlapMarkup}
+    </article>
+  `;
+}
+
+function updateHomeMix() {
+  const funds = document.querySelector('#homeMixFunds');
+  const meter = document.querySelector('#homeMixMeter');
+  if (!funds || !meter) return;
+
+  funds.innerHTML = state.tickers.map((ticker, index) => `
+    <button type="button" data-home-mix-edit aria-label="Edit ${ticker} allocation">
+      <b>${ticker}</b>
+      <strong>${formatPercent(state.weights[index] || 0)}</strong>
+      <span>Edit ETF</span>
+    </button>
+  `).join('');
+  meter.innerHTML = state.tickers.map((ticker, index) => `
+    <i style="width:${Math.max(0, state.weights[index] || 0)}%" title="${ticker} ${formatPercent(state.weights[index] || 0)}"></i>
+  `).join('');
 }
 
 function renderPopularCombos() {
@@ -1727,9 +1783,6 @@ function toggleAddEtfMenu(forceOpen) {
 }
 
 function syncBuilderUi() {
-  document.querySelector('#homeTickerOne').textContent = state.tickers[0] || '—';
-  document.querySelector('#homeTickerTwo').textContent = state.tickers[1] || '—';
-
   const cards = builderFundList.querySelectorAll('.fund-card');
   cards.forEach((card, index) => {
     const ticker = state.tickers[index];
@@ -1758,15 +1811,7 @@ function syncBuilderUi() {
   const combinedTotal = totalWeight();
   document.querySelector('#allocationTotal').textContent = `${formatPercent(combinedTotal)} allocated`;
   document.querySelector('#builder .allocation span').textContent = `${state.tickers.length} ETF${state.tickers.length === 1 ? '' : 's'}`;
-  document.querySelector('#homeTickerOne').textContent = state.tickers[0] || '—';
-  document.querySelector('#homeTickerTwo').textContent = state.tickers[1] || '—';
-  document.querySelector('#homeVoo').innerHTML = `${Math.round(state.weights[0] || 0)}<sup>%</sup>`;
-  document.querySelector('#homeXeqt').innerHTML = `${Math.round(state.weights[1] || 0)}<sup>%</sup>`;
-
-  const meterBars = document.querySelectorAll('.mix-meter i');
-  if (meterBars[0]) meterBars[0].style.width = `${state.weights[0] || 0}%`;
-  if (meterBars[1]) meterBars[1].style.width = `${state.weights[1] || 0}%`;
-
+  updateHomeMix();
   updateHomeInsights();
 }
 
@@ -2000,7 +2045,6 @@ document.querySelector('#compare').addEventListener('click', () => {
   });
 });
 renderPopularCombos();
-renderHomeOverlaps();
 renderExploreCombos();
 applyExploreFilter(state.exploreFilter);
 renderBuilder();

@@ -16,7 +16,7 @@ test('mobile navigation exposes only Explore, Blend, and Compare', () => {
   assert.equal((nav.match(/<button/g) || []).length, 3);
   assert.doesNotMatch(nav, />Home</);
   assert.doesNotMatch(nav, /nav-active/);
-  assert.match(html, /class="wordmark" href="\/" data-home-link/);
+  assert.match(html, /class="home-brand"><a href="\/" data-home-link>Wizardfolio<\/a>/);
   assert.match(html, /viewport-fit=cover/);
 });
 
