@@ -691,53 +691,7 @@ function renderExploreTickerPills(tickers, weights) {
   `).join('');
 }
 
-function renderExploreTopHoldings(holdings, limit = 3) {
-  const visible = holdings.slice(0, limit);
-  if (!visible.length) {
-    return '<p class="explore-holdings-empty">Underlying company holdings are not available for this mix yet.</p>';
-  }
-  return visible.map(holding => `
-    <div class="explore-holding-chip">
-      ${logoMarkup(holdingLogoTicker(holding), holding.name, 48, 'holding-logo-small')}
-      <span>${holding.symbol}</span>
-      <strong>${formatPercent(holding.weight)}</strong>
-    </div>
-  `).join('');
-}
-
-function buildExploreInsight(snapshot, overlapSummary) {
-  const topHolding = snapshot.holdings[0];
-  const topSector = snapshot.sectors[0];
-  const topGeography = snapshot.geography[0];
-  const lines = [];
-
-  if (topHolding) {
-    lines.push(`${topHolding.name} is the largest look-through position at ${formatPercent(topHolding.weight)}.`);
-  }
-
-  if (overlapSummary?.sharedCount) {
-    const overlapPrefix = overlapSummary.metricsComplete ? '' : 'at least ';
-    const sharedLeader = overlapSummary.topHolding?.name ? `, led by ${overlapSummary.topHolding.name}` : '';
-    lines.push(`${overlapSummary.tickerA} and ${overlapSummary.tickerB} overlap by ${overlapPrefix}${formatPercent(overlapSummary.totalOverlap)} by weight${sharedLeader}.`);
-  } else if (topSector && topGeography) {
-    lines.push(`${topSector[0]} leads at ${formatPercent(topSector[1])}, while ${topGeography[0]} accounts for ${formatPercent(topGeography[1])}.`);
-  }
-
-  return lines.join(' ');
-}
-
 function renderExploreCard(combo) {
-  const snapshot = buildMixSnapshot(combo.tickers, combo.weights);
-  const topSector = snapshot.sectors[0];
-  const topGeography = snapshot.geography[0];
-  const overlapSummary = strongestOverlapForTickers(combo.tickers);
-  const overlapLabel = overlapSummary
-    ? `${overlapSummary.metricsComplete ? '' : 'At least '}${formatPercent(overlapSummary.totalOverlap)} overlap`
-    : 'No overlap data';
-  const overlapDetail = overlapSummary
-    ? `${overlapSummary.tickerA} + ${overlapSummary.tickerB}${overlapSummary.topHolding ? ` · ${overlapSummary.topHolding.symbol}` : ''}`
-    : 'Single-fund view';
-  const securityLabel = `${formatInteger(snapshot.uniqueEstimate)} securities`;
   const mixLabel = formatMixSummary(combo.tickers, combo.weights);
   const callToAction = combo.preset
     ? `data-preset="${combo.preset}"`
@@ -753,47 +707,10 @@ function renderExploreCard(combo) {
           <h2>${combo.title}</h2>
           <p>${mixLabel}</p>
         </div>
-        <div class="explore-card-count">
-          <strong>${formatInteger(snapshot.uniqueEstimate)}</strong>
-          <span>underlying names</span>
-        </div>
       </div>
       <div class="explore-card-body">
         <div class="explore-mix-pills">${renderExploreTickerPills(combo.tickers, combo.weights)}</div>
-        <div class="explore-stat-grid">
-          <div class="explore-stat">
-            <span>Top sector</span>
-            <strong>${topSector ? topSector[0] : '—'}</strong>
-            <small>${topSector ? formatPercent(topSector[1]) : 'No data'}</small>
-          </div>
-          <div class="explore-stat">
-            <span>Country exposure</span>
-            <strong>${topGeography ? topGeography[0] : '—'}</strong>
-            <small>${topGeography ? formatPercent(topGeography[1]) : 'No data'}</small>
-          </div>
-          <div class="explore-stat">
-            <span>Look-through</span>
-            <strong>${securityLabel}</strong>
-            <small>Unique underlying securities</small>
-          </div>
-        </div>
-        <div class="explore-overlap-card">
-          <div>
-            <span>${combo.tickers.length > 2 ? 'Strongest overlap' : 'Overlap'}</span>
-            <strong>${overlapLabel}</strong>
-            <small>${overlapDetail}</small>
-          </div>
-          ${overlapSummary?.topHolding ? `
-            <div class="explore-overlap-holding">
-              ${logoMarkup(overlapSummary.topHolding.logoTicker, overlapSummary.topHolding.name, 48, 'holding-logo-small')}
-              <b>${overlapSummary.topHolding.symbol}</b>
-            </div>
-          ` : ''}
-        </div>
-        <div class="explore-holdings-strip">
-          ${renderExploreTopHoldings(snapshot.holdings, 3)}
-        </div>
-        <p class="explore-insight">${buildExploreInsight(snapshot, overlapSummary)}</p>
+        <p class="explore-combo-note">${combo.note}</p>
         <button class="try-mix" type="button" ${callToAction}>Try this mix <span>→</span></button>
       </div>
     </article>
