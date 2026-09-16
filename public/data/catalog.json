@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "1740e7048434",
-  "generatedAt": "2026-09-16T19:45:59.099Z",
+  "version": "acc774b64173",
+  "generatedAt": "2026-09-16T19:54:01.799Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -95,9 +95,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.53
+      "coverageWeight": 98.46
     },
     {
       "symbol": "VEQT.TO",
@@ -359,9 +359,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 99.97
+      "coverageWeight": 99.99
     },
     {
       "symbol": "VTI",
@@ -455,9 +455,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 98.56
+      "coverageWeight": 98.47
     },
     {
       "symbol": "VWO",
@@ -479,9 +479,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 98.92
+      "coverageWeight": 98.82
     },
     {
       "symbol": "SCHD",
@@ -587,9 +587,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 99.76
+      "coverageWeight": 99.89
     },
     {
       "symbol": "BND",
@@ -623,7 +623,7 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
       "coverageWeight": 100
     },
@@ -659,9 +659,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-14",
       "quality": "complete",
-      "coverageWeight": 99.6
+      "coverageWeight": 99.45
     }
   ]
 }
