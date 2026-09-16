@@ -89,8 +89,46 @@ test('Explorer cards show verified previews and never present unavailable analys
   assert.match(explorerSource, /explore-preview-metrics/);
   assert.match(explorerSource, /exploreMetricIcons/);
   assert.doesNotMatch(explorerSource, /▥|◎|◇/);
+  assert.doesNotMatch(explorerSource, /explore-card-count/);
   assert.doesNotMatch(explorerSource, /uniqueEstimate/);
   assert.doesNotMatch(appSource, /No overlap data|Underlying company holdings are not available for this mix/);
+  assert.doesNotMatch(appSource, /allMixesSection\.querySelector\('h2'\)/);
+});
+
+test('frontend aggregation consolidates provider identities for the same stock ticker', () => {
+  const appSource = fs.readFileSync(path.join(repositoryRoot, 'app.js'), 'utf8');
+  const functionSource = name => {
+    const start = appSource.indexOf(`function ${name}(`);
+    const end = appSource.indexOf('\n}\n', start) + 3;
+    assert.ok(start >= 0 && end > start, `${name} source is unavailable`);
+    return appSource.slice(start, end);
+  };
+  const context = {};
+
+  vm.runInNewContext(`
+    ${functionSource('normalizeIdentifier')}
+    ${functionSource('normalizeName')}
+    ${functionSource('securityKey')}
+    result = {
+      nvidia: [
+        securityKey({ type: 'stock', ticker: 'NVDA', id: 'ISIN:US67066G1040' }),
+        securityKey({ type: 'stock', ticker: 'nvda', id: 'LISTING:NASDAQ:NVDA' })
+      ],
+      apple: [
+        securityKey({ type: 'stock', ticker: 'AAPL', id: 'CUSIP:037833100' }),
+        securityKey({ type: 'stock', ticker: 'AAPL', id: 'SOURCE:VENDOR-AAPL' })
+      ],
+      bonds: [
+        securityKey({ type: 'bond', ticker: 'AAPL', id: 'ISIN:BOND-ONE' }),
+        securityKey({ type: 'bond', ticker: 'AAPL', id: 'ISIN:BOND-TWO' })
+      ]
+    };
+  `, context);
+
+  assert.equal(context.result.nvidia[0], 'STOCK:NVDA');
+  assert.equal(context.result.nvidia[0], context.result.nvidia[1]);
+  assert.equal(context.result.apple[0], context.result.apple[1]);
+  assert.notEqual(context.result.bonds[0], context.result.bonds[1]);
 });
 
 test('startup portfolio is available before asynchronous catalog hydration', () => {
