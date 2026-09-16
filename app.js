@@ -1806,6 +1806,17 @@ function removeEtf(index) {
   renderPortfolio();
 }
 
+function overlapFundRowMarkup(ticker, holdingsCount, share, otherTicker) {
+  const progress = Math.max(0, Math.min(100, Number(share) || 0));
+  return `<article class="overlap-fund-row">
+    <div class="overlap-fund-head">
+      <span><b>${ticker}</b><small>${formatInteger(holdingsCount)} holdings</small></span>
+      <span><strong>${formatPercent(share)}</strong><small>also in ${otherTicker}</small></span>
+    </div>
+    <div class="overlap-progress" role="img" aria-label="${formatPercent(share)} of ${ticker} holdings are also in ${otherTicker}"><i style="width:${progress}%"></i></div>
+  </article>`;
+}
+
 function renderPortfolio() {
   const holdings = blendHoldings();
   const sectors = summarizePortfolioSectors(state.tickers, state.weights);
@@ -1846,7 +1857,19 @@ function renderPortfolio() {
       if (overlapPair?.sharedCount) {
         const [tickerA, tickerB] = state.tickers;
         const qualifier = overlapPair.metricsComplete ? '' : 'At least ';
-        overlapSection.innerHTML = `<h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-dashboard"><div class="overlap-stats"><span><strong>${qualifier}${formatPercent(overlapPair.totalOverlap)}</strong><small>Overlap<br />by weight</small></span><span><strong>${qualifier}${formatInteger(overlapPair.sharedCount)}</strong><small>Overlapping<br />holdings</small></span></div><div class="overlap-funds"><article><div><b>${tickerA}</b><span>${formatInteger(overlapPair.holdingsCountA)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsA)}</strong><small>also in ${tickerB}</small></article><article><div><b>${tickerB}</b><span>${formatInteger(overlapPair.holdingsCountB)} holdings</span></div><strong>${formatPercent(overlapPair.shareOfHoldingsB)}</strong><small>also in ${tickerA}</small></article></div>${overlapPair.metricsComplete ? '' : '<p class="overlap-caveat">Based on the constituent data currently available.</p>'}</div>`;
+        const useFundAForInsight = overlapPair.holdingsCountA <= overlapPair.holdingsCountB;
+        const insightTicker = useFundAForInsight ? tickerA : tickerB;
+        const insightOtherTicker = useFundAForInsight ? tickerB : tickerA;
+        const insightHoldingsCount = useFundAForInsight ? overlapPair.holdingsCountA : overlapPair.holdingsCountB;
+        overlapSection.innerHTML = `<h2>Your ETFs repeat holdings</h2><p>See how much of each fund shows up in the other.</p><div class="overlap-card">
+          <div class="overlap-hero"><strong>${qualifier}${formatPercent(overlapPair.totalOverlap)}</strong><span>of your portfolio is duplicated across these ETFs</span><small>${qualifier}${formatInteger(overlapPair.sharedCount)} overlapping holdings</small></div>
+          <div class="overlap-fund-list">
+            ${overlapFundRowMarkup(tickerA, overlapPair.holdingsCountA, overlapPair.shareOfHoldingsA, tickerB)}
+            ${overlapFundRowMarkup(tickerB, overlapPair.holdingsCountB, overlapPair.shareOfHoldingsB, tickerA)}
+          </div>
+          <p class="overlap-insight">${qualifier}${formatInteger(overlapPair.sharedCount)} of ${insightTicker}’s ${formatInteger(insightHoldingsCount)} holdings are already held through ${insightOtherTicker}.</p>
+          ${overlapPair.metricsComplete ? '' : '<p class="overlap-caveat">Based on the constituent data currently available.</p>'}
+        </div>`;
       }
     }
 
