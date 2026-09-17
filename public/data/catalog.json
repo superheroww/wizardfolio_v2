@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "version": "9e358647bbf9",
-  "generatedAt": "2026-09-16T20:02:01.633Z",
+  "version": "42e14dcc0c99",
+  "generatedAt": "2026-09-17T15:05:26.177Z",
   "funds": [
     {
       "symbol": "XEQT.TO",
@@ -11,9 +11,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.01
+      "coverageWeight": 99.99
     },
     {
       "symbol": "XTOT.TO",
@@ -23,7 +23,7 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
       "coverageWeight": 100
     },
@@ -35,9 +35,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.02
+      "coverageWeight": 99.99
     },
     {
       "symbol": "XEF.TO",
@@ -47,9 +47,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.01
+      "coverageWeight": 99.2
     },
     {
       "symbol": "XEC.TO",
@@ -59,9 +59,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 98.34
+      "coverageWeight": 98.28
     },
     {
       "symbol": "XQQ.TO",
@@ -71,9 +71,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.03
+      "coverageWeight": 100.02
     },
     {
       "symbol": "XEI.TO",
@@ -83,9 +83,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.96
+      "coverageWeight": 100
     },
     {
       "symbol": "ITOT",
@@ -95,9 +95,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 98.46
+      "coverageWeight": 98.5
     },
     {
       "symbol": "VEQT.TO",
@@ -119,9 +119,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.01
+      "coverageWeight": 100
     },
     {
       "symbol": "XBB.TO",
@@ -131,7 +131,7 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
       "coverageWeight": 100.14
     },
@@ -143,9 +143,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.01
+      "coverageWeight": 100.06
     },
     {
       "symbol": "VGRO.TO",
@@ -167,9 +167,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.99
+      "coverageWeight": 100
     },
     {
       "symbol": "VBAL.TO",
@@ -203,9 +203,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.98
+      "coverageWeight": 99.96
     },
     {
       "symbol": "VUN.TO",
@@ -239,7 +239,7 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
       "coverageWeight": 100
     },
@@ -275,9 +275,9 @@
       "exchange": "TSX",
       "currency": "CAD",
       "issuer": "blackrock-ca",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.01
+      "coverageWeight": 100
     },
     {
       "symbol": "VDY.TO",
@@ -347,9 +347,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "state-street",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.95289
+      "coverageWeight": 99.955483
     },
     {
       "symbol": "IVV",
@@ -359,9 +359,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.99
+      "coverageWeight": 100.05
     },
     {
       "symbol": "VTI",
@@ -385,7 +385,7 @@
       "issuer": "schwab",
       "holdingsDate": "2026-09-09",
       "quality": "complete",
-      "coverageWeight": 98.57
+      "coverageWeight": 98.5
     },
     {
       "symbol": "QQQ",
@@ -395,9 +395,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.999993
+      "coverageWeight": 100.000001
     },
     {
       "symbol": "QQQM",
@@ -407,9 +407,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "invesco",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.999999
+      "coverageWeight": 100.000003
     },
     {
       "symbol": "VT",
@@ -455,9 +455,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 98.47
+      "coverageWeight": 98.49
     },
     {
       "symbol": "VWO",
@@ -479,9 +479,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
-      "coverageWeight": 98.82
+      "coverageWeight": 98.92
     },
     {
       "symbol": "SCHD",
@@ -491,9 +491,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "schwab",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 100.06
+      "coverageWeight": 100.02
     },
     {
       "symbol": "VIG",
@@ -527,9 +527,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.99
+      "coverageWeight": 100.03
     },
     {
       "symbol": "JEPI",
@@ -539,9 +539,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "jpmorgan",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.69
+      "coverageWeight": 99.64
     },
     {
       "symbol": "JEPQ",
@@ -551,9 +551,9 @@
       "exchange": "NASDAQ",
       "currency": "USD",
       "issuer": "jpmorgan",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.54
+      "coverageWeight": 99.56
     },
     {
       "symbol": "VB",
@@ -587,9 +587,9 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.76
+      "coverageWeight": 99.96
     },
     {
       "symbol": "BND",
@@ -623,7 +623,7 @@
       "exchange": "NYSE Arca",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-14",
+      "holdingsDate": "2026-09-15",
       "quality": "complete",
       "coverageWeight": 100
     },
@@ -647,9 +647,9 @@
       "exchange": "Cboe BZX",
       "currency": "USD",
       "issuer": "blackrock-us",
-      "holdingsDate": "2026-09-15",
+      "holdingsDate": "2026-09-16",
       "quality": "complete",
-      "coverageWeight": 99.95
+      "coverageWeight": 100.03
     },
     {
       "symbol": "USIG",
